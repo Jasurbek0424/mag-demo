@@ -83,17 +83,6 @@ Client(id, name, phone, ...)
 - 2FA (TOTP) — admin/moliyachi uchun majburiy.
 - Rate limiting, input validatsiya (zod), SQL injection himoyasi (Prisma).
 
-## 6. Claude Code'da davom ettirish (terminal)
-
-```bash
-cd ~/Desktop/"MARS FORGE"/MAG
-claude
-```
-
-Keyin Claude Code'ga taxminan shunday topshiriq bering:
-
-> README.md dagi arxitektura bo'yicha Next.js 15 + TypeScript + Tailwind + shadcn/ui + Prisma + PostgreSQL stack'da MAG CRM ni qur. Demo dizayni (MAG-CRM-demo.html) va brend ranglari (#1C2B26, #2B3E38, #DCE2D8) saqlansin. Avval `prisma/schema.prisma`, auth va RBAC middleware, keyin modullarni ketma-ket: Lidlar → Loyihalar → Moliya → Vazifalar → Audit.
-
 ## 7. Brend ranglari (logodan)
 
 `#1C2B26` asosiy to'q · `#2B3E38` brend yashil · `#365049` o'rta · `#DCE2D8` sage · `#EEF1EC` och fon
