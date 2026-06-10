@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAG CRM — Max Arch Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g900:#16241F; --g800:#1C2B26; --g700:#233A33; --g600:#2B3E38; --g500:#365049;
+  --g400:#4C6A60; --g300:#7A9389;
+  --sage:#DCE2D8; --sage2:#C9D2C4; --sage-50:#EEF1EC; --paper:#F6F8F4; --white:#FFFFFF;
+  --ink:#1A2520; --ink2:#4A5A53; --muted:#7C8B83; --line:#E2E7DD; --line2:#D3DACD;
+  --ok:#3F8F5E; --ok-bg:#E5F0E8; --warn:#B8860B; --warn-bg:#F6EFD7; --danger:#BF5340; --danger-bg:#F6E3DE;
+  --info:#4E7E94; --info-bg:#E1EBEF; --violet:#6B6391; --violet-bg:#E9E7F1;
+  --shadow:0 1px 2px rgba(22,36,31,.06),0 6px 20px rgba(22,36,31,.05);
+  --shadow-lg:0 10px 40px rgba(22,36,31,.18);
+  --r:10px; --r-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;line-height:1.45}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:8px}::-webkit-scrollbar-track{background:transparent}
+.brand-font{font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.02em}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:14px}
+.hidden{display:none!important}
+
+/* ===== LOGO MARK ===== */
+.mag-mark{font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.04em;line-height:1}
+
+/* ===== LOGIN ===== */
+#login{position:fixed;inset:0;background:var(--g800);display:flex;align-items:center;justify-content:center;z-index:100;overflow:hidden}
+#login::before{content:"MAG";position:absolute;font-family:'Archivo';font-weight:800;font-size:60vh;color:rgba(220,226,216,.03);right:-6vh;bottom:-14vh;letter-spacing:-.05em;pointer-events:none}
+.login-card{width:880px;max-width:94vw;background:var(--paper);border-radius:22px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1.15fr;overflow:hidden;position:relative;z-index:1}
+.login-left{background:linear-gradient(160deg,var(--g700),var(--g900));color:var(--sage);padding:46px 40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.login-left::after{content:"";position:absolute;width:340px;height:340px;border:1px solid rgba(220,226,216,.12);border-radius:50%;right:-150px;top:-90px}
+.login-left::before{content:"";position:absolute;width:200px;height:200px;border:1px solid rgba(220,226,216,.10);border-radius:50%;right:-40px;top:30px}
+.login-logo{font-size:54px;color:var(--sage)}
+.login-logo sup{font-size:14px;vertical-align:top;font-weight:600;opacity:.7}
+.login-left h2{font-family:'Archivo';font-weight:700;font-size:25px;margin-top:18px;line-height:1.15}
+.login-left p{color:var(--sage2);font-size:13.5px;margin-top:10px;max-width:90%}
+.login-foot{font-size:12px;color:var(--g300);position:relative;z-index:1}
+.login-right{padding:42px 44px}
+.login-right h3{font-family:'Archivo';font-weight:700;font-size:21px;color:var(--ink)}
+.login-right .sub{color:var(--muted);font-size:13px;margin:6px 0 22px}
+.role-label{font-size:12px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.role-grid{display:flex;flex-direction:column;gap:9px}
+.role-opt{display:flex;align-items:center;gap:13px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--white);transition:.15s;text-align:left;width:100%}
+.role-opt:hover{border-color:var(--g400);background:var(--sage-50)}
+.role-opt.sel{border-color:var(--g600);background:var(--sage-50);box-shadow:0 0 0 3px rgba(43,62,56,.08)}
+.role-av{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Archivo';font-weight:700;font-size:15px;color:var(--white);flex-shrink:0}
+.role-opt .rn{font-weight:600;font-size:14px}.role-opt .rd{font-size:12px;color:var(--muted)}
+.login-btn{margin-top:22px;width:100%;background:var(--g600);color:var(--sage);padding:13px;border-radius:11px;font-weight:600;font-size:14.5px;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.login-btn:hover{background:var(--g700)}
+
+/* ===== APP SHELL ===== */
+#app{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:248px;background:var(--g800);color:var(--sage2);display:flex;flex-direction:column;flex-shrink:0;transition:width .2s}
+.sb-top{padding:20px 20px 16px;border-bottom:1px solid rgba(220,226,216,.08);display:flex;align-items:center;gap:10px}
+.sb-logo{font-family:'Archivo';font-weight:800;font-size:27px;color:var(--sage);letter-spacing:-.04em}
+.sb-logo sup{font-size:9px;vertical-align:top;opacity:.6}
+.sb-sub{font-size:9.5px;letter-spacing:.18em;color:var(--g300);text-transform:uppercase;margin-top:1px}
+.nav{flex:1;overflow-y:auto;padding:12px 12px}
+.nav-sec{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--g300);padding:14px 12px 6px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9.5px 12px;border-radius:9px;color:var(--sage2);font-weight:500;font-size:13.5px;transition:.13s;position:relative;width:100%;text-align:left}
+.nav-item:hover{background:rgba(220,226,216,.06);color:var(--sage)}
+.nav-item.active{background:var(--g600);color:var(--white)}
+.nav-item.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;background:var(--sage);border-radius:0 3px 3px 0}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;stroke-width:1.9}
+.nav-badge{margin-left:auto;background:rgba(220,226,216,.14);color:var(--sage);font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px}
+.nav-item.active .nav-badge{background:rgba(255,255,255,.2)}
+.sb-user{padding:14px 16px;border-top:1px solid rgba(220,226,216,.08);display:flex;align-items:center;gap:10px}
+.sb-user .av{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Archivo';font-weight:700;font-size:13px;color:#fff}
+.sb-user .nm{font-size:13px;font-weight:600;color:var(--sage)}
+.sb-user .rl{font-size:11px;color:var(--g300)}
+.sb-user .out{margin-left:auto;color:var(--g300);padding:5px;border-radius:7px}
+.sb-user .out:hover{background:rgba(220,226,216,.08);color:var(--sage)}
+
+/* ===== MAIN ===== */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:62px;background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:18px;flex-shrink:0}
+.crumb{font-size:13px;color:var(--muted)}.crumb b{color:var(--ink);font-weight:600}
+.search{margin-left:8px;flex:1;max-width:380px;position:relative}
+.search input{width:100%;padding:9px 14px 9px 38px;border:1px solid var(--line);border-radius:10px;background:var(--paper);outline:none;transition:.15s}
+.search input:focus{border-color:var(--g400);background:#fff;box-shadow:0 0 0 3px rgba(43,62,56,.06)}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.role-switch{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.role-switch label{font-size:11px;color:var(--muted);font-weight:600}
+.role-switch select{border:none;background:none;font-weight:600;color:var(--ink);outline:none;cursor:pointer;font-size:13px}
+.icon-btn{position:relative;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--ink2);border:1px solid var(--line);background:var(--white)}
+.icon-btn:hover{background:var(--paper)}
+.icon-btn .dot{position:absolute;top:8px;right:9px;width:7px;height:7px;background:var(--danger);border-radius:50%;border:2px solid #fff}
+.content{flex:1;overflow-y:auto;padding:26px 28px 40px}
+
+/* ===== PAGE HEADER ===== */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.page-head h1{font-family:'Archivo';font-weight:700;font-size:24px;color:var(--ink);letter-spacing:-.01em}
+.page-head .pd{color:var(--muted);font-size:13px;margin-top:3px}
+.head-actions{display:flex;gap:10px;align-items:center}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:9px;font-weight:600;font-size:13.5px;transition:.14s;border:1px solid transparent}
+.btn svg{width:16px;height:16px;stroke-width:2}
+.btn-primary{background:var(--g600);color:var(--sage)}.btn-primary:hover{background:var(--g700)}
+.btn-ghost{background:var(--white);color:var(--ink2);border-color:var(--line)}.btn-ghost:hover{background:var(--paper);border-color:var(--line2)}
+.btn-sm{padding:6px 11px;font-size:12.5px}
+
+/* ===== CARDS / GRID ===== */
+.grid{display:grid;gap:18px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+.card-pad{padding:20px}
+.kpi{padding:18px 18px 16px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.kpi .kt{font-size:12.5px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:7px}
+.kpi .ki{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.kpi .ki svg{width:16px;height:16px}
+.kpi .kv{font-family:'Archivo';font-weight:700;font-size:27px;color:var(--ink);margin-top:10px;letter-spacing:-.01em}
+.kpi .kc{font-size:12px;margin-top:5px;display:flex;align-items:center;gap:5px;font-weight:600}
+.kc.up{color:var(--ok)}.kc.down{color:var(--danger)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between}
+.spark{position:absolute;right:0;bottom:0;opacity:.5}
+
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;border-bottom:1px solid var(--line)}
+.card-head h3{font-size:15px;font-weight:600;color:var(--ink)}
+.card-head .ch-sub{font-size:12px;color:var(--muted);font-weight:400}
+.seg{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:3px;gap:2px}
+.seg button{padding:5px 11px;border-radius:6px;font-size:12.5px;color:var(--muted);font-weight:600}
+.seg button.on{background:var(--white);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+/* ===== TABLES ===== */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--paper)}
+td{padding:13px 18px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--ink)}
+tbody tr{transition:.1s}tbody tr:hover{background:var(--sage-50)}
+tbody tr:last-child td{border-bottom:none}
+.cell-main{font-weight:600;color:var(--ink)}
+.cell-sub{font-size:12px;color:var(--muted)}
+
+/* ===== BADGES / CHIPS ===== */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.badge .bd{width:6px;height:6px;border-radius:50%}
+.b-ok{background:var(--ok-bg);color:var(--ok)}.b-ok .bd{background:var(--ok)}
+.b-warn{background:var(--warn-bg);color:var(--warn)}.b-warn .bd{background:var(--warn)}
+.b-danger{background:var(--danger-bg);color:var(--danger)}.b-danger .bd{background:var(--danger)}
+.b-info{background:var(--info-bg);color:var(--info)}.b-info .bd{background:var(--info)}
+.b-violet{background:var(--violet-bg);color:var(--violet)}.b-violet .bd{background:var(--violet)}
+.b-mute{background:var(--paper);color:var(--ink2);border:1px solid var(--line)}.b-mute .bd{background:var(--muted)}
+.av-sm{width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-family:'Archivo';font-weight:700;font-size:11px;color:#fff;flex-shrink:0}
+.av-row{display:flex;align-items:center;gap:9px}
+
+/* ===== KANBAN ===== */
+.kanban{display:grid;gap:14px;align-items:start}
+.kcol{background:var(--sage-50);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-height:120px}
+.kcol.drag-over{border-color:var(--g400);background:#fff;box-shadow:0 0 0 3px rgba(43,62,56,.08)}
+.kcol-head{padding:13px 14px 11px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--line)}
+.kcol-head .kdot{width:9px;height:9px;min-width:9px;flex:0 0 9px;border-radius:50%;align-self:center}
+.kcol-head .kt{font-weight:600;font-size:13px;color:var(--ink)}
+.kcol-head .kn{margin-left:auto;background:var(--white);border:1px solid var(--line);font-size:11.5px;font-weight:600;color:var(--ink2);padding:1px 8px;border-radius:20px}
+.kcol-head .ksum{font-size:11px;color:var(--muted);width:100%;margin-top:2px}
+.kcol-body{padding:11px;display:flex;flex-direction:column;gap:10px;flex:1}
+.kcard{background:var(--white);border:1px solid var(--line);border-radius:11px;padding:13px;box-shadow:var(--shadow);cursor:grab;transition:.12s;border-left:3px solid var(--g400)}
+.kcard:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.kcard.dragging{opacity:.45;cursor:grabbing}
+.kcard .kc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.kcard .kc-title{font-weight:600;font-size:13.5px;color:var(--ink);line-height:1.3}
+.kcard .kc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;align-items:center}
+.kcard .kc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.kcard .kc-amt{font-family:'Archivo';font-weight:700;font-size:14px;color:var(--g600)}
+.tag{font-size:11px;color:var(--ink2);background:var(--paper);border:1px solid var(--line);padding:2px 7px;border-radius:6px;font-weight:500}
+.prio{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.03em}
+.prio-h{background:var(--danger-bg);color:var(--danger)}.prio-m{background:var(--warn-bg);color:var(--warn)}.prio-l{background:var(--info-bg);color:var(--info)}
+
+/* ===== PIPELINE (projects) ===== */
+.pipe{display:flex;gap:0;overflow-x:auto;padding-bottom:6px}
+.pipe-stage{flex:1;min-width:150px}
+.pipe-bar{height:42px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12.5px;color:#fff;position:relative;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.pipe-stage:first-child .pipe-bar{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.pipe-cnt{text-align:center;font-size:12px;color:var(--muted);margin-top:8px}
+.pipe-cnt b{font-family:'Archivo';font-size:18px;color:var(--ink);display:block}
+
+/* progress */
+.prog{height:7px;background:var(--line);border-radius:20px;overflow:hidden;flex:1}
+.prog>i{display:block;height:100%;border-radius:20px;background:var(--g500)}
+.prog-row{display:flex;align-items:center;gap:9px}.prog-row .pv{font-size:12px;font-weight:600;color:var(--ink2);width:34px;text-align:right}
+
+/* ===== MODAL ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(22,36,31,.55);backdrop-filter:blur(3px);z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;animation:fade .15s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:18px;box-shadow:var(--shadow-lg);width:560px;max-width:96vw;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;animation:pop .18s}
+.modal.wide{width:760px}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:'Archivo';font-weight:700;font-size:18px;color:var(--ink)}
+.modal-head .x{width:34px;height:34px;border-radius:9px;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.modal-head .x:hover{background:var(--paper);color:var(--ink)}
+.modal-body{padding:22px 24px;overflow-y:auto}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:var(--paper)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;outline:none;background:var(--white);transition:.14s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--g400);box-shadow:0 0 0 3px rgba(43,62,56,.07)}
+.field .fe{color:var(--danger);font-size:12px;margin-top:5px;display:none;align-items:center;gap:5px}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--danger);background:#fdf6f4}
+.field.invalid input:focus,.field.invalid select:focus,.field.invalid textarea:focus{box-shadow:0 0 0 3px rgba(191,83,64,.1)}
+.field.invalid .fe{display:flex}
+.req{color:var(--danger)}
+.toggle-btn{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:9px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--white);color:var(--ink2);transition:.14s}
+.toggle-btn:hover{border-color:var(--g400)}
+.toggle-btn.on{background:var(--g600);color:var(--sage);border-color:var(--g600)}
+.toggle-btn .sw{width:30px;height:17px;border-radius:20px;background:var(--line2);position:relative;transition:.15s}
+.toggle-btn.on .sw{background:rgba(220,226,216,.4)}
+.toggle-btn .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:.15s}
+.toggle-btn.on .sw::after{left:15px}
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:13px;transition:.12s}
+.chk:hover{background:var(--sage-50)}
+.chk input{width:16px;height:16px;accent-color:var(--g600);cursor:pointer}
+.swatch-row{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{width:32px;height:32px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:.12s}
+.swatch.sel{border-color:var(--ink);box-shadow:0 0 0 2px #fff inset}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.detail-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.detail-row:last-child{border:none}.detail-row .dl{color:var(--muted)}.detail-row .dv{font-weight:600;color:var(--ink)}
+.timeline{position:relative;padding-left:22px;margin-top:6px}
+.timeline::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl-item{position:relative;padding:0 0 16px 0}
+.tl-item::before{content:"";position:absolute;left:-21px;top:3px;width:11px;height:11px;border-radius:50%;background:var(--white);border:2.5px solid var(--g400)}
+.tl-item.done::before{background:var(--ok);border-color:var(--ok)}
+.tl-item .tt{font-weight:600;font-size:13px}.tl-item .ts{font-size:12px;color:var(--muted);margin-top:1px}
+
+/* finance flow */
+.flow{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+.flow-col{display:flex;flex-direction:column;gap:10px}
+.flow-node{border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--white);display:flex;align-items:center;gap:11px}
+.flow-node .fi{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.flow-node .fl{font-size:12px;color:var(--muted)}.flow-node .fv{font-family:'Archivo';font-weight:700;font-size:16px;color:var(--ink)}
+.flow-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.flow-pool{background:var(--g700);color:#fff;border-radius:14px;padding:18px 16px;text-align:center;min-width:130px}
+.flow-pool .pl{font-size:11px;color:var(--sage2)}.flow-pool .pv{font-family:'Archivo';font-weight:700;font-size:20px;margin-top:4px}
+
+.legend{display:flex;flex-direction:column;gap:11px}
+.legend .lr{display:flex;align-items:center;gap:9px;font-size:13px}
+.legend .ld{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.legend .lv{margin-left:auto;font-weight:600;font-family:'Archivo'}
+.legend .lp{color:var(--muted);font-size:12px;width:42px;text-align:right}
+
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty svg{width:42px;height:42px;margin-bottom:12px;opacity:.5}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--g800);color:var(--sage);padding:13px 18px;border-radius:11px;box-shadow:var(--shadow-lg);font-size:13.5px;font-weight:500;z-index:200;display:flex;align-items:center;gap:10px;animation:slideup .25s}
+@keyframes slideup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.lock-note{background:var(--warn-bg);border:1px solid #E8D9A8;color:#8A6D0B;border-radius:12px;padding:14px 16px;font-size:13px;display:flex;gap:10px;align-items:center;margin-bottom:18px}
+
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-left">
+      <div>
+        <div class="mag-mark login-logo">MAG<sup>™</sup></div>
+        <div style="font-size:11px;letter-spacing:.2em;color:var(--g300);margin-top:4px">MAX ARCH GROUP · CRM</div>
+        <h2>Qurilish biznesini<br>boshqarish tizimi</h2>
+        <p>Lidlardan to'lovgacha — lidlar, loyihalar konveyeri, moliya va vazifalar bitta joyda. Har bir rol o'z panelini ko'radi.</p>
+      </div>
+      <div class="login-foot">© 2026 Max Arch Group · Xavfsiz ulanish · v1.0</div>
+    </div>
+    <div class="login-right">
+      <h3>Tizimga kirish</h3>
+      <div class="sub">Demo uchun rolni tanlang — interfeys rolga moslashadi</div>
+      <div class="role-label">Rolingiz</div>
+      <div class="role-grid" id="roleGrid"></div>
+      <button class="login-btn" onclick="doLogin()">
+        Tizimga kirish
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden">
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div>
+        <div class="sb-logo mag-mark">MAG<sup>™</sup></div>
+        <div class="sb-sub">Max Arch Group</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sb-user" id="sbUser"></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb"><b id="crumbPage">Boshqaruv paneli</b></div>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input placeholder="Lid, loyiha, vazifa qidirish...">
+      </div>
+      <div class="tb-right">
+        <div class="seg lang-seg"><button id="langUz" class="on" onclick="setLang('uz')">UZ</button><button id="langRu" onclick="setLang('ru')">RU</button></div>
+        <div class="role-switch">
+          <label>Rol:</label>
+          <select id="roleSwitch" onchange="switchRole(this.value)"></select>
+        </div>
+        <button class="icon-btn" onclick="toast('3 ta yangi bildirishnoma')"><span class="dot"></span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+========================================================= */
+const PALETTE=['#2B3E38','#4E7E94','#B8860B','#BF5340','#3F8F5E','#6B6391','#365049','#7A9389'];
+const fmt=n=>n.toLocaleString('uz-UZ').replace(/,/g,' ');
+const money=n=>(n>=1e6?(n/1e6).toFixed(n%1e6?1:0)+' mln':fmt(n));
+const sum=(a,k)=>a.reduce((s,x)=>s+(k?x[k]:x),0);
+
+const ROLES={
+  super_admin:{name:"Bosh administrator",short:"SA",who:"Jamshid Karimov",color:"#2B3E38",
+    desc:"To'liq nazorat — barcha modullar, rollar, audit",
+    nav:["dashboard","leads","projects","finance","tasks","team","audit","settings"]},
+  admin:{name:"Administrator",short:"AD",who:"Dilnoza Yusupova",color:"#4E7E94",
+    desc:"Operatsion boshqaruv, moliyadan tashqari sozlamalar",
+    nav:["dashboard","leads","projects","finance","tasks","team","audit"]},
+  pm:{name:"Loyiha menejeri",short:"PM",who:"Sardor Aliyev",color:"#B8860B",
+    desc:"Loyihalar va vazifalar, cheklangan moliya",
+    nav:["dashboard","projects","tasks","finance"]},
+  sales:{name:"Sotuv menejeri",short:"ST",who:"Nigora Rashidova",color:"#BF5340",
+    desc:"Lidlar va sotuv konveyeri, vazifalar",
+    nav:["dashboard","leads","tasks"]},
+  finance:{name:"Moliyachi",short:"MO",who:"Bekzod Tursunov",color:"#3F8F5E",
+    desc:"Moliya, hisobotlar, pul oqimi",
+    nav:["dashboard","finance","projects"]}
+};
+const PERM={
+  finance_full:["super_admin","finance"],
+  finance_view:["super_admin","admin","finance","pm"],
+  manage_roles:["super_admin"],
+  audit:["super_admin","admin"],
+  edit_leads:["super_admin","admin","sales"],
+  edit_projects:["super_admin","admin","pm"],
+};
+const can=(p)=>PERM[p] && PERM[p].includes(state.role);
+
+const PEOPLE=[
+  {n:"Sardor Aliyev",s:"SA",c:"#B8860B"},{n:"Nigora Rashidova",s:"NR",c:"#BF5340"},
+  {n:"Bekzod Tursunov",s:"BT",c:"#3F8F5E"},{n:"Dilnoza Yusupova",s:"DY",c:"#4E7E94"},
+  {n:"Jamshid Karimov",s:"JK",c:"#2B3E38"},{n:"Aziz Qodirov",s:"AQ",c:"#6B6391"},
+  {n:"Madina Olimova",s:"MO",c:"#365049"}
+];
+const pp=n=>PEOPLE.find(p=>p.n===n)||{n,s:n.slice(0,2).toUpperCase(),c:"#7A9389"};
+
+const LEAD_STAGES=[
+  {id:"new",t:"LID tushdi",c:"#7A9389"},
+  {id:"qual",t:"Sifatli LID",c:"#4E7E94"},
+  {id:"branch",t:"Filialga keldi",c:"#B8860B"},
+  {id:"offer",t:"Taklif berildi",c:"#6B6391"},
+  {id:"sale",t:"Sotuv",c:"#3F8F5E"}
+];
+let LEADS=[
+  {id:1,name:"\"Yashil Vodiy\" TJM",src:"Instagram",phone:"+998 90 123 45 67",contract:"LD-1042",amt:340000000,stage:"new",owner:"Nigora Rashidova",mood:"thinking",note:"3 qavatli kottej loyihasi"},
+  {id:2,name:"Oqtepa biznes markazi",src:"Tavsiya",phone:"+998 91 234 56 78",contract:"LD-1043",amt:1250000000,stage:"qual",owner:"Nigora Rashidova",mood:"thinking",note:"Ofis binosi, dizayn + qurilish"},
+  {id:3,name:"Karimov shaxsiy uy",src:"Telegram",phone:"+998 93 345 67 89",contract:"LD-1044",amt:185000000,stage:"branch",owner:"Aziz Qodirov",mood:"success",note:"Filialda uchrashuv bo'ldi"},
+  {id:4,name:"\"Mega Plaza\" rekonstruksiya",src:"Veb-sayt",phone:"+998 94 456 78 90",contract:"LD-1045",amt:2100000000,stage:"offer",owner:"Nigora Rashidova",mood:"thinking",note:"Taklif yuborildi, javob kutilmoqda"},
+  {id:5,name:"Samarqand mehmonxonasi",src:"Ko'rgazma",phone:"+998 95 567 89 01",contract:"LD-1046",amt:4800000000,stage:"offer",owner:"Aziz Qodirov",mood:"thinking",note:"Premium segment"},
+  {id:6,name:"Chilonzor turar-joy",src:"Instagram",phone:"+998 97 678 90 12",contract:"LD-1047",amt:560000000,stage:"sale",owner:"Nigora Rashidova",mood:"success",note:"Shartnoma imzolandi ✓"},
+  {id:7,name:"Yunusobod ombor",src:"Tavsiya",phone:"+998 99 789 01 23",contract:"LD-1048",amt:720000000,stage:"new",owner:"Aziz Qodirov",mood:"thinking",note:"Sovuq lid"},
+  {id:8,name:"Restoran interer",src:"Telegram",phone:"+998 90 890 12 34",contract:"LD-1049",amt:95000000,stage:"qual",owner:"Nigora Rashidova",mood:"cancel",note:"Byudjet mos kelmadi"},
+];
+
+const PROJ_STAGES=[
+  {id:"design",t:"Loyihalash",c:"#4E7E94"},
+  {id:"approve",t:"Kelishuv",c:"#6B6391"},
+  {id:"build",t:"Qurilish",c:"#B8860B"},
+  {id:"finish",t:"Pardoz",c:"#365049"},
+  {id:"done",t:"Topshirildi",c:"#3F8F5E"}
+];
+let PROJECTS=[
+  {id:"P-201",name:"Oqtepa biznes markazi",client:"Oqtepa Invest",stage:"build",pm:"Sardor Aliyev",budget:1250000000,spent:740000000,income:900000000,progress:62,deadline:"2026-09-15",resp:"Qurilish boshqarmasi"},
+  {id:"P-202",name:"Chilonzor turar-joy majmuasi",client:"Nodirbek Yo'ldoshev",stage:"finish",pm:"Sardor Aliyev",budget:560000000,spent:480000000,income:560000000,progress:88,deadline:"2026-07-01",resp:"Pardozchi brigada"},
+  {id:"P-203",name:"Karimov shaxsiy uy",client:"A. Karimov",stage:"design",pm:"Madina Olimova",budget:185000000,spent:22000000,income:60000000,progress:18,deadline:"2026-08-20",resp:"Loyiha bo'limi"},
+  {id:"P-204",name:"Samarqand mehmonxonasi",client:"Silk Road Group",stage:"approve",pm:"Madina Olimova",budget:4800000000,spent:340000000,income:1200000000,progress:12,deadline:"2027-02-10",resp:"Bosh menejer"},
+  {id:"P-205",name:"Mega Plaza rekonstruksiya",client:"Mega Retail",stage:"design",pm:"Sardor Aliyev",budget:2100000000,spent:95000000,income:300000000,progress:8,deadline:"2026-12-01",resp:"Loyiha bo'limi"},
+  {id:"P-206",name:"Yunusobod ofis ta'miri",client:"IT Park rezident",stage:"done",pm:"Madina Olimova",budget:180000000,spent:165000000,income:180000000,progress:100,deadline:"2026-05-10",resp:"Topshirildi"},
+];
+
+let TX=[
+  {id:1,date:"2026-06-08",type:"in",cat:"Avans to'lov",proj:"P-201",amt:300000000,method:"Bank o'tkazmasi"},
+  {id:2,date:"2026-06-07",type:"in",cat:"Bosqich to'lovi",proj:"P-202",amt:160000000,method:"Bank o'tkazmasi"},
+  {id:3,date:"2026-06-06",type:"out",cat:"Qurilish materiallari",proj:"P-201",amt:185000000,method:"Bank o'tkazmasi"},
+  {id:4,date:"2026-06-05",type:"out",cat:"Ishchilar oyligi",proj:"—",amt:96000000,method:"Naqd"},
+  {id:5,date:"2026-06-04",type:"in",cat:"Avans to'lov",proj:"P-203",amt:60000000,method:"Naqd"},
+  {id:6,date:"2026-06-03",type:"out",cat:"Operatsion xarajat",proj:"—",amt:24000000,method:"Naqd"},
+  {id:7,date:"2026-06-02",type:"out",cat:"Subpudratchi",proj:"P-202",amt:70000000,method:"Bank o'tkazmasi"},
+  {id:8,date:"2026-06-01",type:"in",cat:"Bosqich to'lovi",proj:"P-204",amt:420000000,method:"Bank o'tkazmasi"},
+  {id:9,date:"2026-05-30",type:"out",cat:"Texnika ijarasi",proj:"P-201",amt:38000000,method:"Bank o'tkazmasi"},
+  {id:10,date:"2026-05-28",type:"out",cat:"Pul yechib olindi",proj:"—",amt:50000000,method:"Naqd"},
+];
+
+const TASK_COLS=[{id:"todo",t:"Bajarish kerak",c:"#7A9389"},{id:"prog",t:"Jarayonda",c:"#B8860B"},{id:"review",t:"Tekshiruvda",c:"#4E7E94"},{id:"done",t:"Bajarildi",c:"#3F8F5E"}];
+let TASKS=[
+  {id:1,title:"Oqtepa BM — 4-qavat armaturasi",proj:"P-201",assignee:"Sardor Aliyev",status:"prog",prio:"h",due:"2026-06-14"},
+  {id:2,title:"Chilonzor — pardoz materiallarini yetkazish",proj:"P-202",assignee:"Madina Olimova",status:"review",prio:"m",due:"2026-06-12"},
+  {id:3,title:"Karimov uy — eskiz loyihasini tayyorlash",proj:"P-203",assignee:"Madina Olimova",status:"todo",prio:"m",due:"2026-06-18"},
+  {id:4,title:"Samarqand — smeta hisob-kitobi",proj:"P-204",assignee:"Bekzod Tursunov",status:"prog",prio:"h",due:"2026-06-15"},
+  {id:5,title:"Mega Plaza — texnik topshiriq",proj:"P-205",assignee:"Sardor Aliyev",status:"todo",prio:"l",due:"2026-06-20"},
+  {id:6,title:"Yunusobod — yakuniy akt imzolash",proj:"P-206",assignee:"Madina Olimova",status:"done",prio:"m",due:"2026-05-10"},
+  {id:7,title:"Subpudratchilar bilan shartnoma",proj:"P-201",assignee:"Dilnoza Yusupova",status:"todo",prio:"h",due:"2026-06-16"},
+  {id:8,title:"Iyun oyi moliya hisoboti",proj:"—",assignee:"Bekzod Tursunov",status:"prog",prio:"m",due:"2026-06-30"},
+];
+
+let AUDIT=[
+  {t:"2026-06-09 14:22",who:"Jamshid Karimov",act:"Moliya — yangi tushum kiritdi",tgt:"P-201 · 300 mln so'm",ic:"in"},
+  {t:"2026-06-09 11:40",who:"Nigora Rashidova",act:"Lid statusini o'zgartirdi",tgt:"Chilonzor → Sotuv",ic:"lead"},
+  {t:"2026-06-08 17:05",who:"Sardor Aliyev",act:"Vazifa yaratdi",tgt:"Oqtepa BM — armatura",ic:"task"},
+  {t:"2026-06-08 09:18",who:"Dilnoza Yusupova",act:"PM rolini biriktirdi",tgt:"Madina Olimova",ic:"role"},
+  {t:"2026-06-07 16:33",who:"Bekzod Tursunov",act:"Xarajat tasdiqladi",tgt:"P-202 · 70 mln so'm",ic:"out"},
+];
+
+let MEMBERS=[
+  {n:"Jamshid Karimov",r:"super_admin",email:"j.karimov@maxarch.uz",phone:"+998 90 100 00 01",status:"Faol"},
+  {n:"Dilnoza Yusupova",r:"admin",email:"d.yusupova@maxarch.uz",phone:"+998 90 100 00 02",status:"Faol"},
+  {n:"Sardor Aliyev",r:"pm",email:"s.aliyev@maxarch.uz",phone:"+998 90 100 00 03",status:"Faol"},
+  {n:"Madina Olimova",r:"pm",email:"m.olimova@maxarch.uz",phone:"+998 90 100 00 04",status:"Faol"},
+  {n:"Nigora Rashidova",r:"sales",email:"n.rashidova@maxarch.uz",phone:"+998 90 100 00 05",status:"Faol"},
+  {n:"Aziz Qodirov",r:"sales",email:"a.qodirov@maxarch.uz",phone:"+998 90 100 00 06",status:"Ta'tilda"},
+  {n:"Bekzod Tursunov",r:"finance",email:"b.tursunov@maxarch.uz",phone:"+998 90 100 00 07",status:"Faol"},
+];
+const state={role:"super_admin",page:"dashboard",myOnly:false,lang:"uz"};
+
+/* =========================================================
+   ICONS
+========================================================= */
+const IC={
+  dashboard:'<path d="M3 13h8V3H3zM13 21h8V3h-8zM3 21h8v-6H3z"/>',
+  leads:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  projects:'<path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>',
+  finance:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="17" cy="14" r="1.5"/>',
+  tasks:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 8h7M9 12h5M9 16h7"/><circle cx="6" cy="8" r="1"/><circle cx="6" cy="12" r="1"/><circle cx="6" cy="16" r="1"/>',
+  team:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  audit:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15H4.5a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 6 8.6l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 11 4.6V4.5a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 2.4 1.51l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+};
+const NAV_LABELS={dashboard:"Boshqaruv paneli",leads:"Lidlar",projects:"Loyihalar",finance:"Moliya",tasks:"Vazifalar",team:"Hodimlar va rollar",audit:"Audit jurnali",settings:"Sozlamalar"};
+const svgIcon=(k,sz=18)=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${IC[k]}</svg>`;
+
+/* =========================================================
+   CHART HELPERS (hand-drawn SVG)
+========================================================= */
+function donut(data,size=150,thick=26){
+  const tot=sum(data,'value')||1;let a=-Math.PI/2;const r=(size-thick)/2,cx=size/2,cy=size/2;
+  let p=data.map(d=>{const ang=d.value/tot*Math.PI*2;const x1=cx+r*Math.cos(a),y1=cy+r*Math.sin(a);a+=ang;const x2=cx+r*Math.cos(a),y2=cy+r*Math.sin(a);const large=ang>Math.PI?1:0;
+    return `<path d="M${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2}" fill="none" stroke="${d.color}" stroke-width="${thick}" stroke-linecap="butt"/>`;}).join('');
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${p}</svg>`;
+}
+function barChart(data,w=520,h=180,fmtv=money){
+  const max=Math.max(...data.map(d=>d.value))*1.15||1;const pad=28,bw=(w-pad)/data.length;
+  let bars=data.map((d,i)=>{const bh=(d.value/max)*(h-34);const x=pad+i*bw+bw*0.2,y=h-22-bh,bwidth=bw*0.6;
+    return `<rect x="${x}" y="${y}" width="${bwidth}" height="${bh}" rx="5" fill="${d.color||'#2B3E38'}"/>
+    <text x="${x+bwidth/2}" y="${h-7}" text-anchor="middle" font-size="11" fill="#7C8B83">${d.label}</text>
+    <text x="${x+bwidth/2}" y="${y-6}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1A2520" font-family="Archivo">${fmtv(d.value)}</text>`;}).join('');
+  let grid='';for(let g=0;g<=3;g++){const y=22+(h-44)*g/3;grid+=`<line x1="${pad}" y1="${y}" x2="${w}" y2="${y}" stroke="#E2E7DD"/>`;}
+  return `<svg width="100%" viewBox="0 0 ${w} ${h}">${grid}${bars}</svg>`;
+}
+function lineChart(series,w=560,h=190){
+  const all=series.flatMap(s=>s.points);const max=Math.max(...all)*1.12||1,min=0;const pad=30;
+  const X=i=>pad+i*((w-pad-6)/(series[0].points.length-1));const Y=v=>h-24-((v-min)/(max-min))*(h-40);
+  let grid='';for(let g=0;g<=3;g++){const y=16+(h-40)*g/3;grid+=`<line x1="${pad}" y1="${y}" x2="${w}" y2="${y}" stroke="#E2E7DD"/>`;}
+  const labels=['Yan','Fev','Mar','Apr','May','Iyun'];
+  let lab=labels.map((l,i)=>`<text x="${X(i)}" y="${h-6}" text-anchor="middle" font-size="11" fill="#7C8B83">${l}</text>`).join('');
+  let paths=series.map(s=>{
+    const pts=s.points.map((v,i)=>`${X(i)},${Y(v)}`).join(' ');
+    const area=`M${X(0)},${h-24} L`+s.points.map((v,i)=>`${X(i)},${Y(v)}`).join(' L')+` L${X(s.points.length-1)},${h-24} Z`;
+    const dots=s.points.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="#fff" stroke="${s.color}" stroke-width="2"/>`).join('');
+    return `${s.fill?`<path d="${area}" fill="${s.color}" opacity="0.08"/>`:''}<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>${dots}`;
+  }).join('');
+  return `<svg width="100%" viewBox="0 0 ${w} ${h}">${grid}${paths}${lab}</svg>`;
+}
+
+/* =========================================================
+   RENDER: LOGIN
+========================================================= */
+function renderRoleGrid(){
+  document.getElementById('roleGrid').innerHTML=Object.entries(ROLES).map(([k,r],i)=>
+    `<button class="role-opt ${i===0?'sel':''}" data-role="${k}" onclick="pickRole('${k}')">
+      <div class="role-av" style="background:${r.color}">${r.short}</div>
+      <div><div class="rn">${r.name}</div><div class="rd">${r.desc}</div></div>
+    </button>`).join('');
+}
+let pickedRole="super_admin";
+function pickRole(k){pickedRole=k;document.querySelectorAll('.role-opt').forEach(e=>e.classList.toggle('sel',e.dataset.role===k));}
+function doLogin(){state.role=pickedRole;document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');buildShell();go('dashboard');}
+
+/* =========================================================
+   SHELL
+========================================================= */
+function buildShell(){
+  const r=ROLES[state.role];
+  document.getElementById('nav').innerHTML=
+    `<div class="nav-sec">Asosiy</div>`+
+    r.nav.map(n=>{
+      const badge=n==='leads'?LEADS.length:n==='tasks'?TASKS.filter(t=>t.status!=='done').length:n==='projects'?PROJECTS.filter(p=>p.stage!=='done').length:'';
+      return `<button class="nav-item ${state.page===n?'active':''}" onclick="go('${n}')">${svgIcon(n)}<span>${NAV_LABELS[n]}</span>${badge!==''?`<span class="nav-badge">${badge}</span>`:''}</button>`;
+    }).join('');
+  document.getElementById('sbUser').innerHTML=
+    `<div class="av" style="background:${r.color}">${r.short}</div>
+     <div><div class="nm">${r.who}</div><div class="rl">${r.name}</div></div>
+     <button class="out" title="Chiqish" onclick="logout()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>`;
+  document.getElementById('roleSwitch').innerHTML=Object.entries(ROLES).map(([k,rr])=>`<option value="${k}" ${k===state.role?'selected':''}>${rr.name}</option>`).join('');
+}
+function switchRole(k){state.role=k;const r=ROLES[k];if(!r.nav.includes(state.page))state.page=r.nav[0];buildShell();go(state.page);toast('Rol: '+r.name+' — interfeys moslandi');}
+function logout(){document.getElementById('app').classList.add('hidden');document.getElementById('login').classList.remove('hidden');}
+function go(p){const r=ROLES[state.role];if(!r.nav.includes(p)){toast("Bu bo'limga ruxsat yo'q");return;}state.page=p;document.getElementById('crumbPage').textContent=NAV_LABELS[p];
+  document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));buildShell();
+  ({dashboard:renderDashboard,leads:renderLeads,projects:renderProjects,finance:renderFinance,tasks:renderTasks,team:renderTeam,audit:renderAudit,settings:renderSettings}[p])();
+  applyLang();
+  document.getElementById('content').scrollTop=0;
+}
+function set(html){document.getElementById('content').innerHTML=html;}
+
+/* =========================================================
+   DASHBOARD (role-aware)
+========================================================= */
+function renderDashboard(){
+  const r=ROLES[state.role];
+  const totalIn=sum(TX.filter(t=>t.type==='in'),'amt'),totalOut=sum(TX.filter(t=>t.type==='out'),'amt');
+  const won=LEADS.filter(l=>l.stage==='sale').length,activeP=PROJECTS.filter(p=>p.stage!=='done').length;
+  const pipelineVal=sum(LEADS.filter(l=>l.stage!=='sale'),'amt');
+
+  let kpis;
+  if(state.role==='sales'){
+    kpis=[
+      kpi('Jami lidlar',LEADS.length,'+3','up','leads','#4E7E94'),
+      kpi('Sotuvga aylandi',won,'+1','up','finance','#3F8F5E'),
+      kpi('Konveyer qiymati',money(pipelineVal),'+12%','up','projects','#B8860B'),
+      kpi('Konversiya','38%','+5%','up','tasks','#6B6391'),
+    ].join('');
+  }else if(state.role==='finance'){
+    kpis=[
+      kpi('Tushum (oy)',money(totalIn),'+18%','up','finance','#3F8F5E'),
+      kpi('Xarajat (oy)',money(totalOut),'+6%','down','finance','#BF5340'),
+      kpi('Sof balans',money(totalIn-totalOut),'+24%','up','dashboard','#2B3E38'),
+      kpi('Kutilayotgan',money(pipelineVal),'','up','projects','#B8860B'),
+    ].join('');
+  }else if(state.role==='pm'){
+    kpis=[
+      kpi('Faol loyihalar',activeP,'','up','projects','#4E7E94'),
+      kpi('Mening vazifalarim',TASKS.filter(t=>t.status!=='done').length,'','up','tasks','#B8860B'),
+      kpi("O'rtacha bajarilish",Math.round(sum(PROJECTS,'progress')/PROJECTS.length)+'%','+4%','up','dashboard','#3F8F5E'),
+      kpi('Muddati yaqin',2,'','down','audit','#BF5340'),
+    ].join('');
+  }else{
+    kpis=[
+      kpi('Tushum (oy)',money(totalIn),'+18%','up','finance','#3F8F5E'),
+      kpi('Faol loyihalar',activeP,'+2','up','projects','#4E7E94'),
+      kpi('Ochiq lidlar',LEADS.filter(l=>l.stage!=='sale').length,'+3','up','leads','#B8860B'),
+      kpi('Sof foyda',money(totalIn-totalOut),'+24%','up','dashboard','#2B3E38'),
+    ].join('');
+  }
+
+  // lead funnel
+  const funnel=LEAD_STAGES.map(s=>({label:s.t.split(' ')[0],value:LEADS.filter(l=>l.stage===s.id).length,color:s.c}));
+  // finance donut
+  const outByCat={};TX.filter(t=>t.type==='out').forEach(t=>outByCat[t.cat]=(outByCat[t.cat]||0)+t.amt);
+  const donutData=Object.entries(outByCat).map(([k,v],i)=>({label:k,value:v,color:PALETTE[i%PALETTE.length]}));
+  // monthly line
+  const lineS=[{color:'#2B3E38',fill:true,points:[420,510,480,640,720,totalIn/1e6]},{color:'#BF5340',fill:false,points:[300,360,340,420,460,totalOut/1e6]}];
+
+  set(`
+  <div class="page-head">
+    <div><h1>Salom, ${r.who.split(' ')[0]}! 👋</h1><div class="pd">${r.name} paneli · ${new Date().toLocaleDateString('uz-UZ',{day:'numeric',month:'long',year:'numeric'})}</div></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost btn-sm" onclick="toast('Hisobot eksport qilindi')">${svgIcon('audit',15)} Hisobot</button>
+      ${can('edit_leads')?`<button class="btn btn-primary btn-sm" onclick="openLeadModal()">${svgIcon('plus',15)} Yangi lid</button>`:''}
+    </div>
+  </div>
+  <div class="grid kpis" style="margin-bottom:18px">${kpis}</div>
+
+  <div class="grid" style="grid-template-columns:1.6fr 1fr;margin-bottom:18px">
+    <div class="card">
+      <div class="card-head"><div><h3>Pul oqimi dinamikasi</h3><div class="ch-sub">Oxirgi 6 oy · mln so'm</div></div>
+        <div style="display:flex;gap:14px;font-size:12px"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#2B3E38"></span>Tushum</span><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#BF5340"></span>Xarajat</span></div>
+      </div>
+      <div class="card-pad">${lineChart(lineS)}</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Xarajatlar tarkibi</h3></div>
+      <div class="card-pad" style="display:flex;align-items:center;gap:18px">
+        <div style="position:relative">${donut(donutData,140,24)}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:11px;color:var(--muted)">Jami</div><div class="brand-font" style="font-size:16px">${money(totalOut)}</div></div></div>
+        <div class="legend" style="flex:1">${donutData.map(d=>`<div class="lr"><span class="ld" style="background:${d.color}"></span><span style="flex:1;color:var(--ink2)">${d.label}</span><span class="lv">${money(d.value)}</span></div>`).join('')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1fr 1.3fr">
+    <div class="card">
+      <div class="card-head"><h3>Sotuv konveyeri</h3><div class="ch-sub">lidlar soni</div></div>
+      <div class="card-pad">${barChart(funnel,420,170,v=>v)}</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>So'nggi harakatlar</h3><button class="btn btn-ghost btn-sm" onclick="go('audit')">Barchasi</button></div>
+      <div style="padding:6px 0">
+        ${AUDIT.slice(0,5).map(a=>`<div style="display:flex;gap:12px;padding:11px 20px;border-bottom:1px solid var(--line)">
+          <div class="av-sm" style="background:${pp(a.who).c}">${pp(a.who).s}</div>
+          <div style="flex:1"><div style="font-size:13px"><b>${a.who.split(' ')[0]}</b> ${a.act.toLowerCase()}</div><div class="cell-sub">${a.tgt}</div></div>
+          <div class="cell-sub" style="white-space:nowrap">${a.t.split(' ')[1]}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>`);
+}
+function kpi(t,v,chg,dir,ic,col){
+  return `<div class="kpi"><div class="kpi-top"><div class="kt">${t}</div><div class="ki" style="background:${col}1a;color:${col}">${svgIcon(ic,16)}</div></div>
+    <div class="kv">${v}</div>${chg?`<div class="kc ${dir}">${dir==='up'?'▲':'▼'} ${chg} <span style="color:var(--muted);font-weight:400">vs o'tgan oy</span></div>`:'<div class="kc" style="color:var(--muted)">Joriy holat</div>'}</div>`;
+}
+
+/* =========================================================
+   LEADS (kanban + drag/drop)
+========================================================= */
+function renderLeads(){
+  const moodBadge=m=>({thinking:'<span class="badge b-warn"><span class="bd"></span>O\'ylayapti</span>',success:'<span class="badge b-ok"><span class="bd"></span>Success</span>',cancel:'<span class="badge b-danger"><span class="bd"></span>Otmen</span>'}[m]);
+  set(`
+  <div class="page-head">
+    <div><h1>Lidlar — LID abrabotka</h1><div class="pd">LID tushdi → Sifatli LID → Filialga keldi → Taklif → Sotuv. Kartani sudrab statusni o'zgartiring.</div></div>
+    <div class="head-actions">
+      <button class="btn btn-ghost" onclick="toast('Filtr paneli')">Filtr</button>
+      ${can('edit_leads')?`<button class="btn btn-primary" onclick="openLeadModal()">${svgIcon('plus',16)} Yangi lid</button>`:''}
+    </div>
+  </div>
+  ${!can('edit_leads')?lockNote("Sizning rolingizda lidlarni faqat ko'rish mumkin — tahrirlash uchun Sotuv/Admin roli kerak."):''}
+  <div class="kanban" id="leadBoard" style="grid-template-columns:repeat(${LEAD_STAGES.length},1fr)">
+    ${LEAD_STAGES.map(s=>{const items=LEADS.filter(l=>l.stage===s.id);const tot=sum(items,'amt');
+      return `<div class="kcol" data-stage="${s.id}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropLead(event,'${s.id}')">
+        <div class="kcol-head"><span class="kdot" style="background:${s.c}"></span><span class="kt">${s.t}</span><span class="kn">${items.length}</span><div class="ksum">${money(tot)} so'm</div></div>
+        <div class="kcol-body">
+          ${items.map(l=>`<div class="kcard" draggable="${can('edit_leads')}" ondragstart="dragStart(event,${l.id},'lead')" ondragend="dragEnd(event)" onclick="openLeadDetail(${l.id})" style="border-left-color:${s.c}">
+            <div class="kc-top"><div class="kc-title">${l.name}</div>${moodBadge(l.mood)}</div>
+            <div class="kc-meta"><span class="tag">${l.src}</span><span class="tag">${l.contract}</span></div>
+            <div class="kc-foot"><div class="av-row"><div class="av-sm" style="background:${pp(l.owner).c}">${pp(l.owner).s}</div><span class="cell-sub">${l.owner.split(' ')[0]}</span></div><div class="kc-amt">${money(l.amt)}</div></div>
+          </div>`).join('')||'<div class="empty" style="padding:24px 8px;font-size:12px">Bo\'sh</div>'}
+        </div>
+      </div>`;}).join('')}
+  </div>`);
+}
+
+/* =========================================================
+   PROJECTS (pipeline + table + CRUD)
+========================================================= */
+function renderProjects(){
+  set(`
+  <div class="page-head">
+    <div><h1>Loyihalar konveyeri</h1><div class="pd">Har bir loyiha qaysi bosqichda va kimdaligini bir qarashda ko'ring.</div></div>
+    <div class="head-actions">
+      ${can('edit_projects')?`<button class="btn btn-primary" onclick="openProjModal()">${svgIcon('plus',16)} Yangi loyiha</button>`:''}
+    </div>
+  </div>
+  <div class="card card-pad" style="margin-bottom:18px">
+    <div class="pipe">
+      ${PROJ_STAGES.map((s,i)=>{const n=PROJECTS.filter(p=>p.stage===s.id).length;const val=sum(PROJECTS.filter(p=>p.stage===s.id),'budget');
+        return `<div class="pipe-stage"><div class="pipe-bar" style="background:${s.c}">${s.t}</div><div class="pipe-cnt"><b>${n}</b>${money(val)} so'm</div></div>`;}).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h3>Barcha loyihalar</h3><div class="ch-sub">${PROJECTS.length} ta loyiha</div></div>
+    <table>
+      <thead><tr><th>Loyiha</th><th>Mijoz</th><th>Bosqich</th><th>Mas'ul (PM)</th><th>Bajarilishi</th><th>Byudjet</th><th>Sarflandi</th><th>Muddat</th></tr></thead>
+      <tbody>${PROJECTS.map(p=>{const st=PROJ_STAGES.find(s=>s.id===p.stage);const over=p.spent>p.budget;
+        return `<tr onclick="openProjDetail('${p.id}')" style="cursor:pointer">
+          <td><div class="cell-main">${p.name}</div><div class="cell-sub">${p.id}</div></td>
+          <td>${p.client}</td>
+          <td><span class="badge" style="background:${st.c}1a;color:${st.c}"><span class="bd" style="background:${st.c}"></span>${st.t}</span></td>
+          <td><div class="av-row"><div class="av-sm" style="background:${pp(p.pm).c}">${pp(p.pm).s}</div>${p.pm.split(' ')[0]}</div></td>
+          <td><div class="prog-row"><div class="prog"><i style="width:${p.progress}%;background:${p.progress===100?'#3F8F5E':'#2B3E38'}"></i></div><span class="pv">${p.progress}%</span></div></td>
+          <td class="cell-main">${money(p.budget)}</td>
+          <td style="color:${over?'var(--danger)':'var(--ink)'}">${money(p.spent)}</td>
+          <td class="cell-sub">${p.deadline}</td>
+        </tr>`;}).join('')}</tbody>
+    </table>
+  </div>`);
+}
+
+/* =========================================================
+   FINANCE
+========================================================= */
+function renderFinance(){
+  if(!can('finance_view')){set(`<div class="page-head"><h1>Moliya</h1></div>${lockNote("Bu bo'lim sizning rolingiz uchun yopiq. Moliya ma'lumotlari faqat Moliyachi va Bosh administrator uchun ochiq.")}`);return;}
+  const totalIn=sum(TX.filter(t=>t.type==='in'),'amt'),totalOut=sum(TX.filter(t=>t.type==='out'),'amt');
+  const cash=sum(TX.filter(t=>t.method==='Naqd'&&t.type==='in'),'amt')-sum(TX.filter(t=>t.method==='Naqd'&&t.type==='out'),'amt');
+  const bank=sum(TX.filter(t=>t.method!=='Naqd'&&t.type==='in'),'amt')-sum(TX.filter(t=>t.method!=='Naqd'&&t.type==='out'),'amt');
+  const expCat={};TX.filter(t=>t.type==='out').forEach(t=>expCat[t.cat]=(expCat[t.cat]||0)+t.amt);
+  const donutData=Object.entries(expCat).map(([k,v],i)=>({label:k,value:v,color:PALETTE[i%PALETTE.length]}));
+  // per project money
+  const byProj=PROJECTS.map(p=>({name:p.name,id:p.id,inc:p.income,spent:p.spent,bal:p.income-p.spent}));
+
+  set(`
+  <div class="page-head">
+    <div><h1>Moliyaviy boshqaruv</h1><div class="pd">Tushum, xarajat va har bir loyiha puli — vizual nazorat.</div></div>
+    <div class="head-actions">
+      ${can('finance_full')?`<button class="btn btn-ghost" onclick="openTxModal('out')">− Xarajat</button><button class="btn btn-primary" onclick="openTxModal('in')">${svgIcon('plus',16)} Tushum</button>`:''}
+    </div>
+  </div>
+  ${can('finance_full')?'':lockNote("Ko'rish rejimi — tranzaksiya kiritish faqat Moliyachi/Bosh administrator uchun.")}
+
+  <div class="grid kpis" style="margin-bottom:18px">
+    ${kpi("Jami tushum",money(totalIn),'+18%','up','finance','#3F8F5E')}
+    ${kpi("Jami xarajat",money(totalOut),'+6%','down','finance','#BF5340')}
+    ${kpi("Sof balans",money(totalIn-totalOut),'+24%','up','dashboard','#2B3E38')}
+    ${kpi("Kutilayotgan tushum",money(sum(PROJECTS,'budget')-sum(PROJECTS,'income')),'','up','projects','#B8860B')}
+  </div>
+
+  <div class="card card-pad" style="margin-bottom:18px">
+    <h3 style="font-size:15px;margin-bottom:16px">Pul oqimi — kirim, kassa, chiqim</h3>
+    <div class="flow">
+      <div class="flow-col">
+        <div class="cell-sub" style="font-weight:600;color:var(--ok)">▸ KIRIM</div>
+        ${flowNode('in','Bank o\'tkazmasi',sum(TX.filter(t=>t.type==='in'&&t.method!=='Naqd'),'amt'),'#3F8F5E')}
+        ${flowNode('in','Naqd pul',sum(TX.filter(t=>t.type==='in'&&t.method==='Naqd'),'amt'),'#3F8F5E')}
+      </div>
+      <div class="flow-mid">
+        <div class="flow-pool"><div class="pl">Umumiy kassa</div><div class="pv">${money(totalIn-totalOut)}</div></div>
+        <div style="font-size:11px;color:var(--muted)">Bank: ${money(bank)}<br>Naqd: ${money(cash)}</div>
+      </div>
+      <div class="flow-col">
+        <div class="cell-sub" style="font-weight:600;color:var(--danger);text-align:right">CHIQIM ◂</div>
+        ${flowNode('out','Loyiha xarajati',sum(TX.filter(t=>t.type==='out'&&t.proj!=='—'),'amt'),'#BF5340')}
+        ${flowNode('out','Oylik + operatsion',sum(TX.filter(t=>t.type==='out'&&t.proj==='—'),'amt'),'#BF5340')}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1fr 1.4fr;margin-bottom:18px">
+    <div class="card">
+      <div class="card-head"><h3>Xarajat turlari</h3></div>
+      <div class="card-pad" style="display:flex;align-items:center;gap:16px">
+        <div style="position:relative">${donut(donutData,150,26)}<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:11px;color:var(--muted)">Chiqim</div><div class="brand-font" style="font-size:15px">${money(totalOut)}</div></div></div>
+        <div class="legend" style="flex:1">${donutData.map(d=>`<div class="lr"><span class="ld" style="background:${d.color}"></span><span style="flex:1;color:var(--ink2);font-size:12.5px">${d.label}</span><span class="lp">${Math.round(d.value/totalOut*100)}%</span></div>`).join('')}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>Loyihalar bo'yicha pul</h3><div class="ch-sub">Har loyihaning o'z puli</div></div>
+      <table>
+        <thead><tr><th>Loyiha</th><th>Tushgan</th><th>Sarflangan</th><th>Qoldiq</th></tr></thead>
+        <tbody>${byProj.map(p=>`<tr><td><div class="cell-main">${p.name}</div><div class="cell-sub">${p.id}</div></td>
+          <td style="color:var(--ok)">${money(p.inc)}</td><td style="color:var(--danger)">${money(p.spent)}</td>
+          <td><b style="color:${p.bal>=0?'var(--ok)':'var(--danger)'}">${money(p.bal)}</b></td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h3>So'nggi tranzaksiyalar</h3><div class="ch-sub">${TX.length} ta yozuv</div></div>
+    <table>
+      <thead><tr><th>Sana</th><th>Turi</th><th>Kategoriya</th><th>Loyiha</th><th>Usul</th><th style="text-align:right">Summa</th></tr></thead>
+      <tbody>${TX.map(t=>`<tr>
+        <td class="cell-sub">${t.date}</td>
+        <td>${t.type==='in'?'<span class="badge b-ok"><span class="bd"></span>Kirim</span>':'<span class="badge b-danger"><span class="bd"></span>Chiqim</span>'}</td>
+        <td class="cell-main">${t.cat}</td><td class="cell-sub">${t.proj}</td>
+        <td><span class="tag">${t.method}</span></td>
+        <td style="text-align:right;font-family:Archivo;font-weight:700;color:${t.type==='in'?'var(--ok)':'var(--danger)'}">${t.type==='in'?'+':'−'}${money(t.amt)}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`);
+}
+function flowNode(type,label,val,col){return `<div class="flow-node"><div class="fi" style="background:${col}1a;color:${col}">${type==='in'?'↓':'↑'}</div><div><div class="fl">${label}</div><div class="fv">${money(val)}</div></div></div>`;}
+
+/* =========================================================
+   TASKS (JIRA-style kanban)
+========================================================= */
+function toggleMyTasks(){state.myOnly=!state.myOnly;renderTasks();toast(state.myOnly?'Faqat mening vazifalarim':'Barcha vazifalar');}
+function renderTasks(){
+  const me=ROLES[state.role].who;
+  const total=TASKS.filter(t=>!state.myOnly||t.assignee===me).length;
+  set(`
+  <div class="page-head">
+    <div><h1>Vazifalar — Task Manager</h1><div class="pd">+ tugmasi bilan vazifa yarating. Kartani sudrab "Jarayonda → Bajarildi" holatiga o'tkazing.${state.myOnly?` · <b>${total}</b> ta sizniki`:''}</div></div>
+    <div class="head-actions">
+      <button class="toggle-btn ${state.myOnly?'on':''}" onclick="toggleMyTasks()"><span class="sw"></span>Faqat mening vazifalarim</button>
+      <div class="seg"><button class="on">Doska</button><button onclick="toast('Ro\\'yxat ko\\'rinishi')">Ro'yxat</button></div>
+      <button class="btn btn-primary" onclick="openTaskModal()">${svgIcon('plus',16)} Vazifa qo'shish</button>
+    </div>
+  </div>
+  <div class="kanban" id="taskBoard" style="grid-template-columns:repeat(${TASK_COLS.length},1fr)">
+    ${TASK_COLS.map(c=>{const items=TASKS.filter(t=>t.status===c.id&&(!state.myOnly||t.assignee===me));
+      return `<div class="kcol" data-status="${c.id}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropTask(event,'${c.id}')">
+        <div class="kcol-head"><span class="kdot" style="background:${c.c}"></span><span class="kt">${c.t}</span><span class="kn">${items.length}</span></div>
+        <div class="kcol-body">
+          ${items.map(t=>{const proj=PROJECTS.find(p=>p.id===t.proj);
+            return `<div class="kcard" draggable="true" ondragstart="dragStart(event,${t.id},'task')" ondragend="dragEnd(event)" onclick="openTaskDetail(${t.id})" style="border-left-color:${c.c}">
+            <div class="kc-top"><div class="kc-title">${t.title}</div></div>
+            <div class="kc-meta"><span class="prio prio-${t.prio}">${({h:'Yuqori',m:"O'rta",l:'Past'})[t.prio]}</span>${t.proj!=='—'?`<span class="tag">${t.proj}</span>`:''}</div>
+            <div class="kc-foot"><div class="av-row"><div class="av-sm" style="background:${pp(t.assignee).c}">${pp(t.assignee).s}</div><span class="cell-sub">${t.assignee.split(' ')[0]}</span></div><span class="cell-sub">📅 ${t.due.slice(5)}</span></div>
+          </div>`;}).join('')||'<div class="empty" style="padding:24px 8px;font-size:12px">Vazifa yo\'q</div>'}
+        </div>
+      </div>`;}).join('')}
+  </div>`);
+}
+
+/* =========================================================
+   TEAM & ROLES
+========================================================= */
+function renderTeam(){
+  if(!can('manage_roles')&&state.role!=='admin'){set(`<div class="page-head"><h1>Hodimlar va rollar</h1></div>${lockNote("Rollarni boshqarish faqat Bosh administrator uchun ochiq.")}`);return;}
+  const editable=can('manage_roles');
+  set(`
+  <div class="page-head">
+    <div><h1>Hodimlar va rollar</h1><div class="pd">Hodim ustiga bosing — ma'lumot va tahrirlash formasi ochiladi. Rol biriktirilsa, interfeys avtomatik moslanadi.</div></div>
+    ${editable?`<div class="head-actions"><button class="btn btn-ghost" onclick="openRoleModal()">${svgIcon('plus',16)} Rol yaratish</button><button class="btn btn-primary" onclick="openMemberModal(-1)">${svgIcon('plus',16)} Hodim qo'shish</button></div>`:''}
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));margin-bottom:18px">
+    ${Object.entries(ROLES).map(([k,r])=>`<div class="card card-pad" style="text-align:center">
+      <div class="role-av" style="background:${r.color};margin:0 auto 10px;width:42px;height:42px">${r.short}</div>
+      <div style="font-weight:600;font-size:13.5px">${r.name}</div>
+      <div class="cell-sub" style="margin-top:4px">${MEMBERS.filter(m=>m.r===k).length} hodim</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:9px">${r.nav.length} bo'lim ochiq</div>
+    </div>`).join('')}
+    ${editable?`<button class="card card-pad" onclick="openRoleModal()" style="text-align:center;border-style:dashed;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer">
+      <div style="width:42px;height:42px;border-radius:11px;border:1.5px dashed var(--line2);display:flex;align-items:center;justify-content:center">${svgIcon('plus',20)}</div>
+      <div style="font-weight:600;font-size:13px">Yangi rol</div></button>`:''}
+  </div>
+  <div class="card">
+    <div class="card-head"><h3>Hodimlar ro'yxati</h3><div class="ch-sub">${MEMBERS.length} ta hodim</div></div>
+    <table>
+      <thead><tr><th>Hodim</th><th>Email</th><th>Rol</th><th>Ruxsatlar</th><th>Holat</th>${editable?'<th></th>':''}</tr></thead>
+      <tbody>${MEMBERS.map((m,i)=>`<tr onclick="openMemberModal(${i})" style="cursor:pointer">
+        <td><div class="av-row"><div class="av-sm" style="background:${pp(m.n).c}">${pp(m.n).s}</div><span class="cell-main">${m.n}</span></div></td>
+        <td class="cell-sub">${m.email}</td>
+        <td><span class="badge" style="background:${ROLES[m.r].color}1a;color:${ROLES[m.r].color}"><span class="bd" style="background:${ROLES[m.r].color}"></span>${ROLES[m.r].name}</span></td>
+        <td class="cell-sub">${ROLES[m.r].nav.length} bo'lim</td>
+        <td>${m.status==='Faol'?'<span class="badge b-ok"><span class="bd"></span>Faol</span>':'<span class="badge b-mute"><span class="bd"></span>Ta\'tilda</span>'}</td>
+        ${editable?`<td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openMemberModal(${i})">Ko'rish / tahrir</button></td>`:''}
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>`);
+}
+
+/* ----- Member info / edit ----- */
+function openMemberModal(i){
+  const isNew=i<0;const m=isNew?{n:"",email:"",phone:"",r:Object.keys(ROLES)[0],status:"Faol"}:MEMBERS[i];
+  const roleOpts=Object.entries(ROLES).map(([k,r])=>`<option value="${k}" ${k===m.r?'selected':''}>${r.name}</option>`).join('');
+  modal(`<div class="modal-head"><h3>${isNew?"Yangi hodim":m.n}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    ${!isNew?`<div style="display:flex;align-items:center;gap:13px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <div class="role-av" style="width:48px;height:48px;background:${pp(m.n).c}">${pp(m.n).s}</div>
+      <div><div style="font-weight:700;font-size:16px;font-family:Archivo">${m.n}</div><div class="cell-sub">${ROLES[m.r].name} · ${m.status}</div></div></div>`:''}
+    <div class="field" id="fld-mn"><label>F.I.O <span class="req">*</span></label><input id="mn" value="${m.n}" oninput="fClear('fld-mn')" placeholder="Ism Familiya"><div class="fe"></div></div>
+    <div class="field-row">
+      <div class="field" id="fld-me"><label>Email <span class="req">*</span></label><input id="me" value="${m.email}" oninput="fClear('fld-me')" placeholder="ism@maxarch.uz"><div class="fe"></div></div>
+      <div class="field"><label>Telefon</label><input id="mp" value="${m.phone||''}" placeholder="+998 90 123 45 67"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Rol (tanlash)</label><select id="mr">${roleOpts}</select></div>
+      <div class="field"><label>Holat</label><select id="ms"><option ${m.status==='Faol'?'selected':''}>Faol</option><option ${m.status!=='Faol'?'selected':''}>Ta'tilda</option></select></div>
+    </div>
+    <div class="cell-sub" style="background:var(--sage-50);border:1px solid var(--line);border-radius:9px;padding:10px 12px">Tanlangan rol bo'yicha ushbu hodimga ochiq bo'limlar avtomatik belgilanadi.</div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveMember(${i})">${isNew?"Qo'shish":"Saqlash"}</button></div>`);
+}
+function saveMember(i){
+  const n=(document.getElementById('mn').value||'').trim();
+  const email=(document.getElementById('me').value||'').trim();
+  let ok=true;
+  if(n.length<2){fErr('fld-mn','F.I.O kiriting');ok=false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){fErr('fld-me','Email noto\'g\'ri. Masalan: ism@maxarch.uz');ok=false;}
+  if(!ok){toast('Maydonlarni to\'g\'ri to\'ldiring');return;}
+  const data={n,email,phone:document.getElementById('mp').value||'',r:document.getElementById('mr').value,status:document.getElementById('ms').value};
+  if(i<0){MEMBERS.push(data);logAudit(ROLES[state.role].who,'Yangi hodim qo\'shdi',`${n} · ${ROLES[data.r].name}`,'role');toast('Hodim qo\'shildi ✓');}
+  else{const old=MEMBERS[i].r;MEMBERS[i]=data;logAudit(ROLES[state.role].who,old!==data.r?'Rolni o\'zgartirdi':'Hodim ma\'lumotini yangiladi',`${n}${old!==data.r?' → '+ROLES[data.r].name:''}`,'role');toast('Saqlandi ✓');}
+  closeModal();renderTeam();
+}
+
+/* ----- Create role ----- */
+let _newRoleColor=PALETTE[0];
+function setRoleColor(c,el){_newRoleColor=c;document.querySelectorAll('#roleSwatches .swatch').forEach(s=>s.classList.remove('sel'));el.classList.add('sel');}
+function openRoleModal(){
+  _newRoleColor=PALETTE[0];
+  modal(`<div class="modal-head"><h3>Yangi rol yaratish</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field-row">
+      <div class="field" id="fld-rn"><label>Rol nomi <span class="req">*</span></label><input id="rn" oninput="fClear('fld-rn');autoShort()" placeholder="Masalan: Snabjenec"><div class="fe"></div></div>
+      <div class="field"><label>Qisqa belgi (2 harf)</label><input id="rsh" maxlength="2" placeholder="SN" style="text-transform:uppercase"></div>
+    </div>
+    <div class="field"><label>Rang</label><div class="swatch-row" id="roleSwatches">${PALETTE.map((c,i)=>`<div class="swatch ${i===0?'sel':''}" style="background:${c}" onclick="setRoleColor('${c}',this)"></div>`).join('')}</div></div>
+    <div class="field"><label>Ruxsat beriladigan bo'limlar</label>
+      <div class="chk-grid">${Object.entries(NAV_LABELS).map(([k,v])=>`<label class="chk"><input type="checkbox" value="${k}" ${['dashboard','tasks'].includes(k)?'checked':''}>${v}</label>`).join('')}</div>
+    </div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveRole()">Rol yaratish</button></div>`);
+}
+function autoShort(){const sh=document.getElementById('rsh');if(sh&&!sh.dataset.touched){const n=document.getElementById('rn').value.trim();sh.value=n.slice(0,2).toUpperCase();}}
+function saveRole(){
+  const name=(document.getElementById('rn').value||'').trim();
+  if(name.length<2){fErr('fld-rn','Rol nomini kiriting');toast('Rol nomini kiriting');return;}
+  const nav=[...document.querySelectorAll('.chk input:checked')].map(c=>c.value);
+  const sel=nav.length?(nav.includes('dashboard')?nav:['dashboard',...nav]):['dashboard'];
+  const short=(document.getElementById('rsh').value||name.slice(0,2)).toUpperCase().slice(0,2);
+  const key='role_'+Date.now();
+  ROLES[key]={name,short,who:name,color:_newRoleColor,desc:'Maxsus rol',nav:sel};
+  logAudit(ROLES[state.role].who,'Yangi rol yaratdi',`${name} · ${sel.length} bo'lim`,'role');
+  closeModal();buildShell();renderTeam();toast('Rol yaratildi: '+name+' ✓');
+}
+
+/* =========================================================
+   AUDIT
+========================================================= */
+function renderAudit(){
+  if(!can('audit')){set(`<div class="page-head"><h1>Audit jurnali</h1></div>${lockNote("Audit jurnali faqat Administrator va Bosh administrator uchun.")}`);return;}
+  const icMap={in:['#3F8F5E','↓'],out:['#BF5340','↑'],lead:['#4E7E94','◆'],task:['#B8860B','✓'],role:['#6B6391','◈']};
+  set(`
+  <div class="page-head">
+    <div><h1>Audit jurnali</h1><div class="pd">Kim, qachon, nima o'zgartirdi — har bir harakat qayd etiladi.</div></div>
+    <button class="btn btn-ghost" onclick="toast('CSV eksport qilindi')">Eksport</button>
+  </div>
+  <div class="card">
+    <table>
+      <thead><tr><th>Vaqt</th><th>Foydalanuvchi</th><th>Harakat</th><th>Obyekt</th></tr></thead>
+      <tbody>${AUDIT.map(a=>{const[c,sym]=icMap[a.ic]||['#7A9389','•'];
+        return `<tr><td class="cell-sub" style="white-space:nowrap">${a.t}</td>
+        <td><div class="av-row"><div class="av-sm" style="background:${pp(a.who).c}">${pp(a.who).s}</div>${a.who}</div></td>
+        <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="width:22px;height:22px;border-radius:6px;background:${c}1a;color:${c};display:inline-flex;align-items:center;justify-content:center;font-size:11px">${sym}</span>${a.act}</span></td>
+        <td class="cell-sub">${a.tgt}</td></tr>`;}).join('')}</tbody>
+    </table>
+  </div>`);
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+function renderSettings(){
+  set(`
+  <div class="page-head"><div><h1>Sozlamalar</h1><div class="pd">Tizim, xavfsizlik va brending.</div></div></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:18px">
+    ${settingCard('Xavfsizlik','Ikki bosqichli autentifikatsiya (2FA)','Yoqilgan','b-ok')}
+    ${settingCard('Audit & Time','Har bir harakat vaqt belgisi bilan saqlanadi','Faol','b-ok')}
+    ${settingCard('Rol-based ruxsat','RBAC — har rol o\'z bo\'limlarini ko\'radi','5 ta rol','b-info')}
+    ${settingCard('Zaxira nusxa','Avtomatik kunlik backup','Har kuni 03:00','b-info')}
+    ${settingCard('Til','Interfeys tili','O\'zbekcha (lotin)','b-mute')}
+    ${settingCard('Ma\'lumotlar shifrlash','AES-256 · TLS 1.3','Yoqilgan','b-ok')}
+  </div>
+  <div class="card card-pad" style="margin-top:18px">
+    <h3 style="font-size:15px;margin-bottom:4px">Brend ranglari</h3>
+    <div class="cell-sub" style="margin-bottom:14px">Max Arch Group logosidan olingan</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      ${[['#1C2B26','Asosiy to\'q'],['#2B3E38','Brend yashil'],['#365049','O\'rta'],['#DCE2D8','Sage'],['#EEF1EC','Och fon']].map(c=>`<div style="text-align:center"><div style="width:74px;height:54px;border-radius:10px;background:${c[0]};border:1px solid var(--line)"></div><div class="cell-sub" style="margin-top:6px">${c[1]}<br>${c[0]}</div></div>`).join('')}
+    </div>
+  </div>`);
+}
+function settingCard(t,d,v,b){return `<div class="card card-pad" style="display:flex;align-items:center;gap:14px"><div style="flex:1"><div style="font-weight:600;font-size:14px">${t}</div><div class="cell-sub" style="margin-top:3px">${d}</div></div><span class="badge ${b}"><span class="bd"></span>${v}</span></div>`;}
+
+/* =========================================================
+   DRAG & DROP
+========================================================= */
+let dragItem=null,dragType=null;
+function dragStart(e,id,type){dragItem=id;dragType=type;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function dragEnd(e){e.target.classList.remove('dragging');document.querySelectorAll('.kcol').forEach(c=>c.classList.remove('drag-over'));}
+function dragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function dragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function dropLead(e,stage){e.preventDefault();if(dragType!=='lead'||!can('edit_leads'))return;const l=LEADS.find(x=>x.id===dragItem);if(l&&l.stage!==stage){const old=LEAD_STAGES.find(s=>s.id===l.stage).t;l.stage=stage;if(stage==='sale'){l.mood='success';}logAudit(ROLES[state.role].who,'Lid statusini o\'zgartirdi',`${l.name} → ${LEAD_STAGES.find(s=>s.id===stage).t}`,'lead');toast(`"${l.name}" → ${LEAD_STAGES.find(s=>s.id===stage).t}`);renderLeads();}}
+function dropTask(e,status){e.preventDefault();if(dragType!=='task')return;const t=TASKS.find(x=>x.id===dragItem);if(t&&t.status!==status){t.status=status;logAudit(ROLES[state.role].who,'Vazifa holatini o\'zgartirdi',`${t.title} → ${TASK_COLS.find(c=>c.id===status).t}`,'task');toast(`Vazifa → ${TASK_COLS.find(c=>c.id===status).t}`);renderTasks();}}
+
+/* =========================================================
+   MODALS
+========================================================= */
+function modal(html,wide){const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)bg.remove();};
+  bg.innerHTML=`<div class="modal ${wide?'wide':''}">${html}</div>`;document.body.appendChild(bg);window._m=bg;applyLang();}
+function closeModal(){if(window._m)window._m.remove();}
+
+const FE_ICON='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>';
+function fErr(id,msg){const f=document.getElementById(id);if(!f)return;f.classList.add('invalid');f.querySelector('.fe').innerHTML=FE_ICON+'<span>'+msg+'</span>';}
+function fClear(id){const f=document.getElementById(id);if(f)f.classList.remove('invalid');}
+function openLeadModal(){
+  modal(`<div class="modal-head"><h3>Yangi lid qo'shish</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field" id="fld-ln"><label>Mijoz / obyekt nomi <span class="req">*</span></label><input id="ln" oninput="fClear('fld-ln')" placeholder="Masalan: Yashil Vodiy TJM"><div class="fe"></div></div>
+    <div class="field-row"><div class="field"><label>Manba</label><select id="ls"><option>Instagram</option><option>Telegram</option><option>Tavsiya</option><option>Veb-sayt</option><option>Ko'rgazma</option></select></div>
+      <div class="field" id="fld-lp"><label>Telefon <span class="req">*</span></label><input id="lp" inputmode="tel" oninput="fClear('fld-lp')" placeholder="+998 90 123 45 67"><div class="fe"></div></div></div>
+    <div class="field-row"><div class="field"><label>Shartnoma raqami</label><input id="lc" placeholder="LD-1050"></div>
+      <div class="field" id="fld-la"><label>Taxminiy summa (so'm) <span class="req">*</span></label><input id="la" type="number" min="0" oninput="fClear('fld-la')" placeholder="340000000"><div class="fe"></div></div></div>
+    <div class="field"><label>Mas'ul</label><select id="lo"><option>Nigora Rashidova</option><option>Aziz Qodirov</option></select></div>
+    <div class="field"><label>Izoh</label><textarea id="lnote" rows="2" placeholder="Qisqa izoh..."></textarea></div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveLead()">Saqlash</button></div>`);
+}
+function saveLead(){
+  const name=(document.getElementById('ln').value||'').trim();
+  const phoneRaw=(document.getElementById('lp').value||'').trim();
+  const amt=+document.getElementById('la').value||0;
+  let ok=true;
+  if(name.length<2){fErr('fld-ln','Mijoz nomini kiriting (kamida 2 belgi)');ok=false;}
+  const digits=(phoneRaw.match(/\d/g)||[]).length;
+  if(!phoneRaw){fErr('fld-lp','Telefon raqamini kiriting');ok=false;}
+  else if(!/^[+\d\s\-()]+$/.test(phoneRaw)||digits<9){fErr('fld-lp','Telefon noto\'g\'ri. Masalan: +998 90 123 45 67');ok=false;}
+  if(!(amt>0)){fErr('fld-la','Summani kiriting (0 dan katta)');ok=false;}
+  if(!ok){toast('Maydonlarni to\'g\'ri to\'ldiring');return;}
+  LEADS.unshift({id:Date.now(),name,src:document.getElementById('ls').value,phone:phoneRaw,contract:document.getElementById('lc').value||'LD-'+Math.floor(1040+Math.random()*900),amt,stage:'new',owner:document.getElementById('lo').value,mood:'thinking',note:document.getElementById('lnote').value||''});
+  logAudit(ROLES[state.role].who,'Yangi lid yaratdi',name,'lead');closeModal();toast('Lid qo\'shildi ✓');go('leads');
+}
+
+function openLeadDetail(id){const l=LEADS.find(x=>x.id===id);const st=LEAD_STAGES.find(s=>s.id===l.stage);
+  modal(`<div class="modal-head"><h3>${l.name}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div style="display:flex;gap:8px;margin-bottom:16px"><span class="badge" style="background:${st.c}1a;color:${st.c}"><span class="bd" style="background:${st.c}"></span>${st.t}</span>
+    ${({thinking:'<span class="badge b-warn"><span class="bd"></span>O\'ylayapti</span>',success:'<span class="badge b-ok"><span class="bd"></span>Success</span>',cancel:'<span class="badge b-danger"><span class="bd"></span>Otmen</span>'}[l.mood])}</div>
+    <div class="detail-row"><span class="dl">Shartnoma raqami</span><span class="dv">${l.contract}</span></div>
+    <div class="detail-row"><span class="dl">Manba (kimdan keldi)</span><span class="dv">${l.src}</span></div>
+    <div class="detail-row"><span class="dl">Telefon</span><span class="dv">${l.phone}</span></div>
+    <div class="detail-row"><span class="dl">Taxminiy summa</span><span class="dv">${money(l.amt)} so'm</span></div>
+    <div class="detail-row"><span class="dl">Mas'ul</span><span class="dv">${l.owner}</span></div>
+    <div class="detail-row"><span class="dl">Izoh</span><span class="dv">${l.note||'—'}</span></div>
+    <h4 style="font-size:13px;margin:18px 0 10px;color:var(--ink2)">Konveyer tarixi</h4>
+    <div class="timeline">${LEAD_STAGES.map(s=>{const idx=LEAD_STAGES.findIndex(x=>x.id===l.stage);const sidx=LEAD_STAGES.findIndex(x=>x.id===s.id);
+      return `<div class="tl-item ${sidx<=idx?'done':''}"><div class="tt">${s.t}</div><div class="ts">${sidx<idx?'Bajarildi':sidx===idx?'Joriy bosqich':'Kutilmoqda'}</div></div>`;}).join('')}</div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Yopish</button>${can('edit_leads')?'<button class="btn btn-primary" onclick="closeModal();toast(\'Taklif yuborildi\')">Taklif yuborish</button>':''}</div>`,true);
+}
+
+function openProjModal(){
+  modal(`<div class="modal-head"><h3>Yangi loyiha yaratish</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Loyiha nomi</label><input id="pn" placeholder="Obyekt nomi"></div>
+    <div class="field-row"><div class="field"><label>Mijoz</label><input id="pc" placeholder="Mijoz nomi"></div>
+      <div class="field"><label>Loyiha menejeri</label><select id="ppm"><option>Sardor Aliyev</option><option>Madina Olimova</option></select></div></div>
+    <div class="field-row"><div class="field"><label>Bosqich</label><select id="pst">${PROJ_STAGES.map(s=>`<option value="${s.id}">${s.t}</option>`).join('')}</select></div>
+      <div class="field"><label>Byudjet (so'm)</label><input id="pb" type="number" placeholder="500000000"></div></div>
+    <div class="field"><label>Topshirish muddati</label><input id="pd" type="date"></div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveProj()">Yaratish</button></div>`);
+}
+function saveProj(){const n=document.getElementById('pn').value||'Yangi loyiha';const b=+document.getElementById('pb').value||0;
+  PROJECTS.unshift({id:'P-'+Math.floor(200+Math.random()*99),name:n,client:document.getElementById('pc').value||'—',stage:document.getElementById('pst').value,pm:document.getElementById('ppm').value,budget:b,spent:0,income:0,progress:0,deadline:document.getElementById('pd').value||'2026-12-31',resp:'Loyiha bo\'limi'});
+  logAudit(ROLES[state.role].who,'Yangi loyiha yaratdi',n,'task');closeModal();toast('Loyiha yaratildi ✓');go('projects');}
+
+function openProjDetail(id){const p=PROJECTS.find(x=>x.id===id);const st=PROJ_STAGES.find(s=>s.id===p.stage);const tasks=TASKS.filter(t=>t.proj===id);
+  modal(`<div class="modal-head"><h3>${p.name}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div style="display:flex;gap:8px;margin-bottom:16px"><span class="badge" style="background:${st.c}1a;color:${st.c}"><span class="bd" style="background:${st.c}"></span>${st.t}</span><span class="tag">${p.id}</span></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="kpi" style="box-shadow:none"><div class="kt">Byudjet</div><div class="kv" style="font-size:19px">${money(p.budget)}</div></div>
+      <div class="kpi" style="box-shadow:none"><div class="kt">Sarflandi</div><div class="kv" style="font-size:19px;color:${p.spent>p.budget?'var(--danger)':'var(--ink)'}">${money(p.spent)}</div></div>
+    </div>
+    <div class="detail-row"><span class="dl">Mijoz</span><span class="dv">${p.client}</span></div>
+    <div class="detail-row"><span class="dl">Loyiha menejeri</span><span class="dv">${p.pm}</span></div>
+    <div class="detail-row"><span class="dl">Mas'ul bo'lim</span><span class="dv">${p.resp}</span></div>
+    <div class="detail-row"><span class="dl">Tushgan pul</span><span class="dv" style="color:var(--ok)">${money(p.income)} so'm</span></div>
+    <div class="detail-row"><span class="dl">Muddat</span><span class="dv">${p.deadline}</span></div>
+    <div class="detail-row"><span class="dl">Bajarilishi</span><span class="dv" style="flex:1;max-width:160px"><div class="prog-row"><div class="prog"><i style="width:${p.progress}%"></i></div><span class="pv">${p.progress}%</span></div></span></div>
+    <h4 style="font-size:13px;margin:18px 0 8px;color:var(--ink2)">Bog'liq vazifalar (${tasks.length})</h4>
+    ${tasks.map(t=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)"><span class="prio prio-${t.prio}">${({h:'Yuqori',m:"O'rta",l:'Past'})[t.prio]}</span><span style="flex:1;font-size:13px">${t.title}</span><span class="badge ${({todo:'b-mute',prog:'b-warn',review:'b-info',done:'b-ok'})[t.status]}"><span class="bd"></span>${TASK_COLS.find(c=>c.id===t.status).t}</span></div>`).join('')||'<div class="cell-sub">Vazifa yo\'q</div>'}
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Yopish</button>${can('edit_projects')?'<button class="btn btn-primary" onclick="closeModal();go(\'tasks\')">Vazifa qo\'shish</button>':''}</div>`,true);
+}
+
+function openTaskModal(){
+  modal(`<div class="modal-head"><h3>Yangi vazifa</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Vazifa nomi</label><input id="tt" placeholder="Nima qilinishi kerak?"></div>
+    <div class="field-row"><div class="field"><label>Loyiha</label><select id="tp"><option value="—">— (umumiy)</option>${PROJECTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
+      <div class="field"><label>Mas'ul (assigned to)</label><select id="ta">${PEOPLE.map(p=>`<option>${p.n}</option>`).join('')}</select></div></div>
+    <div class="field-row"><div class="field"><label>Muhimlik</label><select id="tpr"><option value="h">Yuqori</option><option value="m" selected>O'rta</option><option value="l">Past</option></select></div>
+      <div class="field"><label>Muddat</label><input id="td" type="date"></div></div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveTask()">Yaratish</button></div>`);
+}
+function saveTask(){const t=document.getElementById('tt').value||'Yangi vazifa';
+  TASKS.unshift({id:Date.now(),title:t,proj:document.getElementById('tp').value,assignee:document.getElementById('ta').value,status:'todo',prio:document.getElementById('tpr').value,due:document.getElementById('td').value||'2026-06-30'});
+  logAudit(ROLES[state.role].who,'Vazifa yaratdi',t,'task');closeModal();toast('Vazifa qo\'shildi ✓');go('tasks');}
+
+function openTaskDetail(id){const t=TASKS.find(x=>x.id===id);const col=TASK_COLS.find(c=>c.id===t.status);
+  modal(`<div class="modal-head"><h3>${t.title}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div style="display:flex;gap:8px;margin-bottom:14px"><span class="badge ${({todo:'b-mute',prog:'b-warn',review:'b-info',done:'b-ok'})[t.status]}"><span class="bd"></span>${col.t}</span><span class="prio prio-${t.prio}">${({h:'Yuqori',m:"O'rta",l:'Past'})[t.prio]}</span></div>
+    <div class="detail-row"><span class="dl">Mas'ul</span><span class="dv">${t.assignee}</span></div>
+    <div class="detail-row"><span class="dl">Loyiha</span><span class="dv">${t.proj}</span></div>
+    <div class="detail-row"><span class="dl">Muddat</span><span class="dv">${t.due}</span></div>
+    <h4 style="font-size:13px;margin:16px 0 8px;color:var(--ink2)">Holatni o'zgartirish</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">${TASK_COLS.map(c=>`<button class="btn ${c.id===t.status?'btn-primary':'btn-ghost'} btn-sm" onclick="moveTask(${t.id},'${c.id}')">${c.t}</button>`).join('')}</div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Yopish</button></div>`);
+}
+function moveTask(id,s){const t=TASKS.find(x=>x.id===id);t.status=s;logAudit(ROLES[state.role].who,'Vazifa holatini o\'zgartirdi',`${t.title} → ${TASK_COLS.find(c=>c.id===s).t}`,'task');closeModal();toast('Holat yangilandi');go('tasks');}
+
+function openTxModal(type){
+  modal(`<div class="modal-head"><h3>${type==='in'?'Tushum kiritish':'Xarajat kiritish'}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Kategoriya</label><select id="xc">${(type==='in'?['Avans to\'lov','Bosqich to\'lovi','Yakuniy to\'lov']:['Qurilish materiallari','Ishchilar oyligi','Subpudratchi','Operatsion xarajat','Texnika ijarasi','Pul yechib olindi']).map(c=>`<option>${c}</option>`).join('')}</select></div>
+    <div class="field-row"><div class="field"><label>Loyiha</label><select id="xp"><option value="—">— (umumiy)</option>${PROJECTS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
+      <div class="field"><label>To'lov usuli</label><select id="xm"><option>Bank o'tkazmasi</option><option>Naqd</option></select></div></div>
+    <div class="field"><label>Summa (so'm)</label><input id="xa" type="number" placeholder="100000000"></div>
+  </div>
+  <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">Bekor</button><button class="btn btn-primary" onclick="saveTx('${type}')">Saqlash</button></div>`);
+}
+function saveTx(type){const a=+document.getElementById('xa').value||0;const cat=document.getElementById('xc').value;
+  TX.unshift({id:Date.now(),date:new Date().toISOString().slice(0,10),type,cat,proj:document.getElementById('xp').value,amt:a,method:document.getElementById('xm').value});
+  logAudit(ROLES[state.role].who,type==='in'?'Yangi tushum kiritdi':'Xarajat kiritdi',`${cat} · ${money(a)} so'm`,type);closeModal();toast(type==='in'?'Tushum kiritildi ✓':'Xarajat kiritildi ✓');go('finance');}
+
+/* =========================================================
+   UTIL
+========================================================= */
+function logAudit(who,act,tgt,ic){AUDIT.unshift({t:new Date().toISOString().slice(0,16).replace('T',' '),who,act,tgt,ic});}
+function lockNote(txt){return `<div class="lock-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>${txt}</div>`;}
+let toastT;function toast(msg){const old=document.querySelector('.toast');if(old)old.remove();const t=document.createElement('div');t.className='toast';t.innerHTML=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${tr(msg)}`;document.body.appendChild(t);clearTimeout(toastT);toastT=setTimeout(()=>t.remove(),2600);}
+
+/* =========================================================
+   I18N — UZ → RU (manba: o'zbekcha; RU avtomatik almashtiriladi)
+========================================================= */
+const I18N={
+"Boshqaruv paneli":"Панель управления","Lidlar":"Лиды","Loyihalar konveyeri":"Воронка проектов","Loyihalar":"Проекты","Moliyaviy boshqaruv":"Финансовое управление","Moliyachi":"Финансист","Moliya":"Финансы","Vazifalar — Task Manager":"Задачи — Task Manager","Vazifalar":"Задачи","Hodimlar va rollar":"Сотрудники и роли","Audit jurnali":"Журнал аудита","Sozlamalar":"Настройки","Asosiy":"Основное","Chiqish":"Выход","Rol: ":"Роль: ","Rol:":"Роль:","Lid, loyiha, vazifa qidirish...":"Поиск: лид, проект, задача...",
+"Bosh administrator paneli":"Панель: Главный администратор","Administrator paneli":"Панель: Администратор","Loyiha menejeri paneli":"Панель: Менеджер проекта","Sotuv menejeri paneli":"Панель: Менеджер продаж","Moliyachi paneli":"Панель: Финансист",
+"Bosh administrator":"Главный администратор","Administrator":"Администратор","Loyiha menejeri":"Менеджер проекта","Sotuv menejeri":"Менеджер продаж",
+"To'liq nazorat — barcha modullar, rollar, audit":"Полный контроль — все модули, роли, аудит","Operatsion boshqaruv, moliyadan tashqari sozlamalar":"Операционное управление, настройки кроме финансов","Loyihalar va vazifalar, cheklangan moliya":"Проекты и задачи, ограниченные финансы","Lidlar va sotuv konveyeri, vazifalar":"Лиды и воронка продаж, задачи","Moliya, hisobotlar, pul oqimi":"Финансы, отчёты, денежный поток",
+"Salom,":"Привет,","Hisobot":"Отчёт","Yangi lid qo'shish":"Добавить новый лид","Yangi lid":"Новый лид",
+"Tushum (oy)":"Доход (мес)","Faol loyihalar":"Активные проекты","Ochiq lidlar":"Открытые лиды","Sof foyda":"Чистая прибыль","Jami tushum":"Общий доход","Jami xarajat":"Общий расход","Sof balans":"Чистый баланс","Kutilayotgan tushum":"Ожидаемый доход","Kutilayotgan":"Ожидается","Jami lidlar":"Всего лидов","Sotuvga aylandi":"Стало продажей","Konveyer qiymati":"Стоимость воронки","Konversiya":"Конверсия","Xarajat (oy)":"Расход (мес)","Mening vazifalarim":"Мои задачи","O'rtacha bajarilish":"Средн. выполнение","Muddati yaqin":"Скоро дедлайн","vs o'tgan oy":"к пред. месяцу","Joriy holat":"Текущее состояние",
+"Pul oqimi dinamikasi":"Динамика денежного потока","Oxirgi 6 oy · mln so'm":"Последние 6 мес · млн сум","Xarajatlar tarkibi":"Структура расходов","Sotuv konveyeri":"Воронка продаж","lidlar soni":"кол-во лидов","So'nggi harakatlar":"Последние действия","Barchasi":"Все","Jami":"Итого",
+"Yan":"Янв","Fev":"Фев","Mar":"Мар","Apr":"Апр","May":"Май","Iyun":"Июнь",
+"Lidlar — LID abrabotka":"Лиды — обработка лидов","LID tushdi → Sifatli LID → Filialga keldi → Taklif → Sotuv. Kartani sudrab statusni o'zgartiring.":"Лид поступил → Качественный → Пришёл в филиал → Предложение → Продажа. Перетащите карточку, чтобы изменить статус.","Filtr":"Фильтр",
+"Sizning rolingizda lidlarni faqat ko'rish mumkin — tahrirlash uchun Sotuv/Admin roli kerak.":"В вашей роли лиды доступны только для просмотра — для редактирования нужна роль Продажи/Админ.",
+"LID tushdi":"Лид поступил","Sifatli LID":"Качественный лид","Filialga keldi":"Пришёл в филиал","Taklif berildi":"Предложение отправлено",
+"O'ylayapti":"Думает","Success":"Успех","Otmen":"Отмена","Bo'sh":"Пусто",
+"Har bir loyiha qaysi bosqichda va kimdaligini bir qarashda ko'ring.":"Видно с одного взгляда, на каком этапе и у кого каждый проект.","Yangi loyiha yaratish":"Создать новый проект","Yangi loyiha":"Новый проект",
+"Loyihalash":"Проектирование","Kelishuv":"Согласование","Qurilish materiallari":"Стройматериалы","Qurilish boshqarmasi":"Стройуправление","Qurilish":"Строительство","Pardozchi brigada":"Отделочная бригада","Pardoz":"Отделка","Topshirildi":"Сдан","Loyiha bo'limi":"Проектный отдел","Bosh menejer":"Главный менеджер",
+"Barcha loyihalar":"Все проекты","ta loyiha":"проектов","Mijoz":"Клиент","Bosqich":"Этап","Mas'ul (PM)":"Ответственный (PM)","Bajarilishi":"Выполнение","Byudjet (so'm)":"Бюджет (сум)","Byudjet":"Бюджет","Sarflandi":"Потрачено","Muddat":"Срок",
+"Tushum, xarajat va har bir loyiha puli — vizual nazorat.":"Доход, расход и деньги по каждому проекту — визуальный контроль.","Ko'rish rejimi — tranzaksiya kiritish faqat Moliyachi/Bosh administrator uchun.":"Режим просмотра — ввод транзакций только для Финансиста/Главного администратора.","Bu bo'lim sizning rolingiz uchun yopiq. Moliya ma'lumotlari faqat Moliyachi va Bosh administrator uchun ochiq.":"Этот раздел закрыт для вашей роли. Финансовые данные доступны только Финансисту и Главному администратору.",
+"Pul oqimi — kirim, kassa, chiqim":"Денежный поток — приход, касса, расход","KIRIM":"ПРИХОД","CHIQIM":"РАСХОД","Bank o'tkazmasi":"Банк. перевод","Naqd pul":"Наличные","Umumiy kassa":"Общая касса","Bank:":"Банк:","Naqd:":"Нал:","Loyiha xarajati":"Расход проекта","Oylik + operatsion":"Зарплата + операц.","Xarajat turlari":"Виды расходов","Loyihalar bo'yicha pul":"Деньги по проектам","Har loyihaning o'z puli":"У каждого проекта свои деньги","Tushgan pul":"Поступившие деньги","Tushgan":"Поступило","Sarflangan":"Потрачено","Qoldiq":"Остаток","So'nggi tranzaksiyalar":"Последние транзакции","ta yozuv":"записей","Sana":"Дата","Kategoriya":"Категория","Summa":"Сумма","Kirim":"Приход",
+"Avans to'lov":"Авансовый платёж","Bosqich to'lovi":"Этапный платёж","Yakuniy to'lov":"Финальный платёж","Ishchilar oyligi":"Зарплата рабочих","Operatsion xarajat":"Операционный расход","Subpudratchi":"Субподрядчик","Texnika ijarasi":"Аренда техники","Pul yechib olindi":"Снятие денег",
+"+ tugmasi bilan vazifa yarating.":"Создавайте задачу кнопкой +.","Jarayonda → Bajarildi":"В процессе → Выполнено","holatiga o'tkazing.":"переведите в статус.","ta sizniki":"ваших","Faqat mening vazifalarim":"Только мои задачи","Barcha vazifalar":"Все задачи","Doska":"Доска","Ro'yxat":"Список","Vazifa qo'shish":"Добавить задачу","Bajarish kerak":"К выполнению","Tekshiruvda":"На проверке","Jarayonda":"В процессе","Bajarildi":"Выполнено","Yuqori":"Высокий","Vazifa yo'q":"Нет задач",
+"Hodim ustiga bosing — ma'lumot va tahrirlash formasi ochiladi. Rol biriktirilsa, interfeys avtomatik moslanadi.":"Нажмите на сотрудника — откроется форма с данными и редактированием. При назначении роли интерфейс подстроится автоматически.","Rol yaratish":"Создать роль","Hodim qo'shish":"Добавить сотрудника","Yangi rol":"Новая роль","bo'lim ochiq":"разделов открыто","Hodimlar ro'yxati":"Список сотрудников","ta hodim":"сотрудников","Ruxsatlar":"Доступы","Holat":"Статус","Faol":"Активен","Ta'tilda":"В отпуске","Ko'rish / tahrir":"Просмотр / правка","Rollarni boshqarish faqat Bosh administrator uchun ochiq.":"Управление ролями доступно только Главному администратору.",
+"Tizim, xavfsizlik va brending.":"Система, безопасность и брендинг.","Xavfsizlik":"Безопасность","Ikki bosqichli autentifikatsiya (2FA)":"Двухфакторная аутентификация (2FA)","Yoqilgan":"Включено","Audit & Time":"Аудит и время","Har bir harakat vaqt belgisi bilan saqlanadi":"Каждое действие сохраняется с отметкой времени","Rol-based ruxsat":"Доступ по ролям (RBAC)","RBAC — har rol o'z bo'limlarini ko'radi":"RBAC — каждая роль видит свои разделы","ta rol":"ролей","Zaxira nusxa":"Резервная копия","Avtomatik kunlik backup":"Автоматический ежедневный бэкап","Har kuni":"Ежедневно","Interfeys tili":"Язык интерфейса","O'zbekcha (lotin)":"Узбекский (латиница)","Ma'lumotlar shifrlash":"Шифрование данных","Brend ranglari":"Фирменные цвета","Max Arch Group logosidan olingan":"Взято из логотипа Max Arch Group","Asosiy to'q":"Основной тёмный","Brend yashil":"Фирменный зелёный","Och fon":"Светлый фон",
+"Kim, qachon, nima o'zgartirdi — har bir harakat qayd etiladi.":"Кто, когда и что изменил — каждое действие фиксируется.","Eksport":"Экспорт","Vaqt":"Время","Foydalanuvchi":"Пользователь","Harakat":"Действие","Obyekt":"Объект","Audit jurnali faqat Administrator va Bosh administrator uchun.":"Журнал аудита доступен только Администратору и Главному администратору.",
+"Moliya — yangi tushum kiritdi":"Финансы — внёс новый доход","moliya — yangi tushum kiritdi":"финансы — внёс новый доход","Lid statusini o'zgartirdi":"Изменил статус лида","lid statusini o'zgartirdi":"изменил статус лида","Vazifa yaratdi":"Создал задачу","vazifa yaratdi":"создал задачу","PM rolini biriktirdi":"Назначил роль PM","pm rolini biriktirdi":"назначил роль pm","Xarajat tasdiqladi":"Подтвердил расход","xarajat tasdiqladi":"подтвердил расход","Yangi lid yaratdi":"Создал новый лид","Vazifa holatini o'zgartirdi":"Изменил статус задачи","Yangi loyiha yaratdi":"Создал новый проект","Yangi tushum kiritdi":"Внёс новый доход","Xarajat kiritdi":"Внёс расход","Yangi hodim qo'shdi":"Добавил сотрудника","Rolni o'zgartirdi":"Изменил роль","Hodim ma'lumotini yangiladi":"Обновил данные сотрудника","Yangi rol yaratdi":"Создал новую роль",
+"Mijoz / obyekt nomi":"Клиент / объект","Manba":"Источник","Shartnoma raqami":"Номер договора","Taxminiy summa (so'm)":"Примерная сумма (сум)","Taxminiy summa":"Примерная сумма","Izoh":"Комментарий","Bekor":"Отмена","Saqlash":"Сохранить","Tavsiya":"Рекомендация","Veb-sayt":"Сайт","Ko'rgazma":"Выставка","Masalan: Yashil Vodiy TJM":"Например: Yashil Vodiy TJM","Qisqa izoh...":"Краткий комментарий...","Mijoz nomini kiriting (kamida 2 belgi)":"Введите имя клиента (минимум 2 символа)","Telefon raqamini kiriting":"Введите номер телефона","Telefon noto'g'ri. Masalan: +998 90 123 45 67":"Неверный телефон. Например: +998 90 123 45 67","Summani kiriting (0 dan katta)":"Введите сумму (больше 0)",
+"Yangi loyiha yaratish":"Создать новый проект","Loyiha nomi":"Название проекта","Topshirish muddati":"Срок сдачи","Yaratish":"Создать","Obyekt nomi":"Название объекта","Mijoz nomi":"Имя клиента",
+"Konveyer tarixi":"История воронки","Manba (kimdan keldi)":"Источник (от кого пришёл)","Joriy bosqich":"Текущий этап","Kutilmoqda":"Ожидается","Yopish":"Закрыть","Taklif yuborish":"Отправить предложение",
+"Bog'liq vazifalar":"Связанные задачи","Mas'ul bo'lim":"Ответственный отдел",
+"Yangi vazifa":"Новая задача","Vazifa nomi":"Название задачи","Nima qilinishi kerak?":"Что нужно сделать?","Mas'ul (assigned to)":"Ответственный (assigned to)","Muhimlik":"Приоритет","— (umumiy)":"— (общее)","Holatni o'zgartirish":"Изменить статус",
+"Tushum kiritish":"Внести доход","Xarajat kiritish":"Внести расход","To'lov usuli":"Способ оплаты","− Xarajat":"− Расход",
+"Yangi hodim":"Новый сотрудник","F.I.O kiriting":"Введите Ф.И.О","F.I.O":"Ф.И.О","Rol (tanlash)":"Роль (выбор)","Tanlangan rol bo'yicha ushbu hodimga ochiq bo'limlar avtomatik belgilanadi.":"По выбранной роли доступные разделы назначаются автоматически.","Email noto'g'ri. Masalan: ism@maxarch.uz":"Неверный email. Например: ism@maxarch.uz","Qo'shish":"Добавить",
+"Rol nomi":"Название роли","Qisqa belgi (2 harf)":"Короткий код (2 буквы)","Rang":"Цвет","Ruxsat beriladigan bo'limlar":"Доступные разделы","Rol nomini kiriting":"Введите название роли","Maxsus rol":"Особая роль",
+"Bu bo'limga ruxsat yo'q":"Нет доступа к этому разделу","Maydonlarni to'g'ri to'ldiring":"Заполните поля правильно","Lid qo'shildi ✓":"Лид добавлен ✓","Saqlandi ✓":"Сохранено ✓","Hodim qo'shildi ✓":"Сотрудник добавлен ✓","Loyiha yaratildi ✓":"Проект создан ✓","Vazifa qo'shildi ✓":"Задача добавлена ✓","Tushum kiritildi ✓":"Доход внесён ✓","Xarajat kiritildi ✓":"Расход внесён ✓","Holat yangilandi":"Статус обновлён","3 ta yangi bildirishnoma":"3 новых уведомления","Hisobot eksport qilindi":"Отчёт экспортирован","CSV eksport qilindi":"CSV экспортирован","Filtr paneli":"Панель фильтров","Taklif yuborildi":"Предложение отправлено","Rol yaratildi:":"Роль создана:","Vazifa → ":"Задача → "," — interfeys moslandi":" — интерфейс подстроен",
+"Hodimlar va rollar":"Сотрудники и роли","Hodim":"Сотрудник","Loyiha menejeri":"Менеджер проекта","Sotuv menejeri":"Менеджер продаж","Loyiha":"Проект","Vazifalar":"Задачи","Til":"Язык","Bosqich":"Этап","Mas'ul":"Ответственный","Manba":"Источник","Telefon":"Телефон","Holat":"Статус","Tushum":"Доход","Xarajat":"Расход","Chiqim":"Расход","Sotuv":"Продажа","Turi":"Тип","Usul":"Способ","Naqd":"Наличные","Yuqori":"Высокий","O'rta":"Средний","Past":"Низкий","Rol":"Роль","so'm":"сум","mln":"млн","ta hodim":"сотрудников",
+};
+let _i18nKeys=null;
+function tr(text){if(state.lang!=='ru'||text==null)return text;const keys=_i18nKeys||(_i18nKeys=Object.keys(I18N).sort((a,b)=>b.length-a.length));let t=String(text);for(const k of keys){if(t.indexOf(k)>=0)t=t.split(k).join(I18N[k]);}return t;}
+function applyLang(){
+  const u=document.getElementById('langUz'),r=document.getElementById('langRu');
+  if(u){u.classList.toggle('on',state.lang==='uz');r.classList.toggle('on',state.lang==='ru');}
+  if(state.lang!=='ru')return;
+  const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+  nodes.forEach(n=>{const v=n.nodeValue;if(!v||!v.trim())return;const nv=tr(v);if(nv!==v)n.nodeValue=nv;});
+  document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(e=>{const nv=tr(e.placeholder);if(nv!==e.placeholder)e.placeholder=nv;});
+  document.querySelectorAll('option').forEach(e=>{const nv=tr(e.textContent);if(nv!==e.textContent)e.textContent=nv;});
+  document.querySelectorAll('[title]').forEach(e=>{const c=e.getAttribute('title');const nv=tr(c);if(nv!==c)e.setAttribute('title',nv);});
+}
+function setLang(l){if(state.lang===l)return;state.lang=l;if(document.getElementById('app').classList.contains('hidden')){applyLang();return;}go(state.page);}
+
+/* INIT */
+renderRoleGrid();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
